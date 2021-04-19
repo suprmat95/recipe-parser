@@ -52,7 +52,6 @@ export function text2num(s: string, language: string) {
     const regExString = firstLetter.join('[.]?') +'[.]?'
     const regEx = new RegExp(regExString, 'gi')
     if(a[0].match(regEx)){
-      console.log((firstLetter.join('.') +'.').toLowerCase())
       return (firstLetter.join('.') +'.').toLocaleLowerCase()
     }
   }

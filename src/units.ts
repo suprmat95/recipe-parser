@@ -1,12 +1,12 @@
 export const engUnits = {
-  cup: ['c', 'c.', 'C', 'Cups','cups'],
+  cup: ['c', 'c.', 'C', 'Cups'],
   gallon: ['gal'],
   ounce: ['oz', 'oz.'],
   pint: ['pt', 'pts', 'pt.'],
   pound: ['lb', 'lb.', 'lbs', 'lbs.', 'Lb', 'Lbs'],
   quart: ['qt', 'qt.', 'qts', 'qts.'],
-  tablespoon: ['tbs', 'tbsp', 'tbspn', 'T', 'T.', 'Tablespoons', 'Tablespoon', 'tablespoons'],
-  teaspoon: ['tsp', 'tspn', 't', 't.', 'teaspoons'],
+  tablespoon: ['tbs', 'tbsp', 'tbspn', 'T', 'T.', 'Tablespoons', 'Tablespoon'],
+  teaspoon: ['tsp', 'tspn', 't', 't.'],
   gram: ['g', 'g.'],
   kilogram: ['kg', 'kg.', 'Kg', 'Kg.'],
   liter: ['l', 'l.', 'lt', 'Lt', 'LT', 'L', 'L.'],
@@ -44,28 +44,56 @@ export const engPluralUnits = {
   piece: 'pieces'
 } as { [key: string]: string };
 
+export const engNameToSymbol= {
+  cup: 'c',
+  gallon: 'gal',
+  ounce: 'oz',
+  pint: 'pt',
+  pound: 'lb',
+  quart: 'qt',
+  tablespoon: 'tbs',
+  teaspoon: 'tsp',
+  gram: 'g',
+  kilogram: 'kg',
+  liter: 'lt',
+  milligram: 'mg',
+  milliliter: 'ml',
+  clove: '',
+  bag: '',
+  box: '',
+  pinch: '',
+  can: '',
+  slice: '',
+  piece: ''
+} as { [key: string]: string };
+
 export const engPreposition = ['of'];
 
 
 export const itaUnits = {
-  tazza: [ 'Tazza', 'tazzina', 'Tazzina','tazzine', 'tazze'],
+  bicchiere: ['bicchiere', 'bicchieri'],
+  bustina: ['bustina', 'bustine'],
   cucchiaio: ['Cucchiaio', 'Cucchiai'],
   cucchiaino: ['Cucchiaino', 'Cucchiaini','cucchiaini'],
   grammo: ['g', 'g.', 'gr','Grammo', 'grammi', 'Grammi'],
   chilogrammo: ['kg', 'kg.', 'KG','Kg', 'Kg.', 'Chilogrammo', 'chilogrammi', 'Chilogrammi','kilogrammo', 'Kilogrammo'],
+  fetta: ['fetta', 'fette'],
+  foglia: ['Foglia','foglie'],
   litro: ['l', 'l.', 'L', 'L.', 'lt','Litro', 'litri'],
+  mazzetto: ['Mazzetto','mazzetti'],
   milligrammo: ['mg', 'mg.', 'Milligrammo','milligrammi'],
   millilitro: ['ml', 'ml.', 'mL', 'mL.', 'Millilitro','millilitri'],
   panetto: ['Panetto', 'panetti'],
-  foglia: ['Foglia','foglie'],
-  mazzetto: ['Mazzetto','mazzetti'],
-  vasetto: ['Vasetto', 'vasetti'],
   pacco: ['pkg', 'pkgs', 'pacchetto','Pacchetto','Pacco', 'pacchi'],
   pezzo: ['pcs', 'pcs.','pezzi'],
   pizzico: ['Pizzico','pizzichi'],
+  tazza: [ 'Tazza', 'tazzina', 'Tazzina','tazzine', 'tazze'],
+  vasetto: ['Vasetto', 'vasetti'],
 } as { [key: string]: string[] };
 
 export const itaPluralUnits = {
+  bicchiere: 'bicchieri',
+  bustina: 'bustine',
   tazza: 'tazze',
   quarto: 'quarti',
   cucchiaio: 'cucchiai',
@@ -76,7 +104,6 @@ export const itaPluralUnits = {
   milligrammo: 'milligrammi',
   millilitro: 'millilitri',
   spicchio: 'spicchi',
-  bustina: 'bustine',
   scatola: 'scatole',
   pizzico: 'pizzichi',
   lattina: 'lattine',
@@ -88,9 +115,33 @@ export const itaPluralUnits = {
   vasetto: 'vasetto'
 } as { [key: string]: string };
 
+export const itaNameToSymbol = {
+  bicchiere: '',
+  bustina: '',
+  tazza: '',
+  quarto: '',
+  cucchiaio: '',
+  spicchio: '',
+  scatola: '',
+  pizzico: '',
+  lattina: '',
+  fetta: '',
+  pezzo: '',
+  panetto: '',
+  foglia: '',
+  mazzetto: '',
+  vasetto: '',
+  grammo: 'g',
+  cucchiaino: 'cc',
+  chilogrammo: 'kg',
+  litro: 'lt',
+  milligrammo: 'mg',
+  millilitro: 'ml',
+} as { [key: string]: string };
+
 export const itaPreposition = ['di','d\''];
 
 export const  unitsMap = new Map();
-unitsMap.set("eng",[engUnits,  engPluralUnits, engPreposition]);
-unitsMap.set("ita",[itaUnits,  itaPluralUnits, itaPreposition]);
+unitsMap.set("eng",[engUnits,  engPluralUnits, engPreposition, engNameToSymbol]);
+unitsMap.set("ita",[itaUnits,  itaPluralUnits, itaPreposition, itaNameToSymbol]);
 

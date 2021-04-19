@@ -102,6 +102,7 @@ describe('recipe parser eng', () => {
       expect(parse('1/3 cup confectioners’ sugar', 'eng')).to.deep.equal({
         quantity: '0.333',
         unit: 'cup',
+        symbol: 'c',
         ingredient: 'confectioners’ sugar',
         minQty: '0.333',
         maxQty: '0.333',
@@ -170,6 +171,7 @@ describe('recipe parser eng', () => {
     it('"1 (14.5 oz) can tomatoes"', () => {
       expect(parse('1 (14.5 oz) can tomatoes', 'eng')).to.deep.equal({
         unit: 'can',
+        symbol: null,
         quantity: '1',
         ingredient: 'tomatoes (14.5 oz)',
         minQty: '1',
@@ -179,6 +181,7 @@ describe('recipe parser eng', () => {
     it('"25 lb beef stew chunks (or buy a roast and chop into small cubes)"', () => {
       expect(parse('25 lb beef stew chunks (or buy a roast and chop into small cubes)', 'eng')).to.deep.equal({
         unit: 'pound',
+        symbol: 'lb',
         quantity: '25',
         ingredient: 'beef stew chunks (or buy a roast and chop into small cubes)',
         minQty: '25',
@@ -188,6 +191,7 @@ describe('recipe parser eng', () => {
     it('"parses ingredient with range: 1 to 2 chicken breasts"', () => {
       expect(parse('1 to 2 chicken breasts', 'eng')).to.deep.equal({
         unit: null,
+        symbol: null,
         quantity: '1-2',
         ingredient: 'chicken breasts',
         minQty: '1',
@@ -197,6 +201,7 @@ describe('recipe parser eng', () => {
     it('"parses ingredient with range: 1 - 2 chicken breasts"', () => {
       expect(parse('1 - 2 chicken breasts', 'eng')).to.deep.equal({
         unit: null,
+        symbol: null,
         quantity: '1-2',
         ingredient: 'chicken breasts',
         minQty: '1',
@@ -206,6 +211,7 @@ describe('recipe parser eng', () => {
     it('"parses ingredient with range: 1-2 chicken breasts"', () => {
       expect(parse('1-2 chicken breasts', 'eng')).to.deep.equal({
         unit: null,
+        symbol: null,
         quantity: '1-2',
         ingredient: 'chicken breasts',
         minQty: '1',
@@ -215,6 +221,7 @@ describe('recipe parser eng', () => {
     it('"1 (16 oz) box pasta"', () => {
       expect(parse('1 (16 oz) box pasta', 'eng')).to.deep.equal({
         unit: 'box',
+        symbol: null,
         quantity: '1',
         ingredient: 'pasta (16 oz)',
         minQty: '1',
@@ -224,6 +231,7 @@ describe('recipe parser eng', () => {
     it('"1 slice cheese"', () => {
       expect(parse('1 slice cheese', 'eng')).to.deep.equal({
         unit: 'slice',
+        symbol: null,
         quantity: '1',
         ingredient: 'cheese',
         minQty: '1',
@@ -235,6 +243,7 @@ describe('recipe parser eng', () => {
   it('translates unit when no unit provided', () => {
     expect(parse('1 tortilla', 'eng')).to.deep.equal({
       unit: null,
+      symbol: null,
       ingredient: 'tortilla',
       quantity: '1',
       minQty: '1',
@@ -247,6 +256,7 @@ describe('recipe parser eng', () => {
         ingredient: 'Powdered Sugar',
         quantity: null,
         unit: null,
+        symbol: null,
         minQty: null,
         maxQty: null,
     });
@@ -482,6 +492,7 @@ describe('recipe parser ita', () => {
       expect(parse('1/3 tazza zucchero a velo', 'ita')).to.deep.equal({
         quantity: '0.333',
         unit: 'tazza',
+        symbol: null,
         ingredient: 'zucchero a velo',
         minQty: '0.333',
         maxQty: '0.333',
@@ -559,6 +570,7 @@ describe('recipe parser ita', () => {
     it('"1 (14.5 oz) lattina pommodori"', () => {
       expect(parse('1 (14.5 oz) lattina pommodori', 'ita')).to.deep.equal({
         unit: 'lattina',
+        symbol: null,
         quantity: '1',
         ingredient: 'pommodori (14.5 oz)',
         minQty: '1',
@@ -568,6 +580,7 @@ describe('recipe parser ita', () => {
     it('"parses ingredient with range: 1 to 2 petto di pollo"', () => {
       expect(parse('1 to 2 petto di pollo', 'eng')).to.deep.equal({
         unit: null,
+        symbol: null,
         quantity: '1-2',
         ingredient: 'petto di pollo',
         minQty: '1',
@@ -577,6 +590,7 @@ describe('recipe parser ita', () => {
     it('"parses ingredient with range: 1 - 2  petto di pollo"', () => {
       expect(parse('1 - 2 petto di pollo', 'eng')).to.deep.equal({
         unit: null,
+        symbol: null,
         quantity: '1-2',
         ingredient: 'petto di pollo',
         minQty: '1',
@@ -586,6 +600,7 @@ describe('recipe parser ita', () => {
     it('"parses ingredient with range: 1-2 petto di pollo"', () => {
       expect(parse('1-2 petto di pollo', 'ita')).to.deep.equal({
         unit: null,
+        symbol: null,
         quantity: '1-2',
         ingredient: 'petto di pollo',
         minQty: '1',
@@ -595,6 +610,7 @@ describe('recipe parser ita', () => {
     it('"1 (16 oz) scatola pasta"', () => {
       expect(parse('1 (16 oz) scatola pasta', 'ita')).to.deep.equal({
         unit: 'scatola',
+        symbol: null,
         quantity: '1',
         ingredient: 'pasta (16 oz)',
         minQty: '1',
@@ -605,6 +621,7 @@ describe('recipe parser ita', () => {
       expect(parse('1 fetta di formaggio', 'ita')).to.deep.equal({
         unit: 'fetta',
         quantity: '1',
+        symbol: null,
         ingredient: 'formaggio',
         minQty: '1',
         maxQty: '1',
@@ -614,9 +631,82 @@ describe('recipe parser ita', () => {
       expect(parse('1 spicchio d\'aglio', 'ita')).to.deep.equal({
         unit: 'spicchio',
         quantity: '1',
+        symbol: null,
         ingredient: 'aglio',
         minQty: '1',
         maxQty: '1',
+      });
+    });
+    describe('" check the correct symbol"', () => {
+      it('"100 grammi di farina"', () => {
+        expect(parse('100 grammi di farina', 'ita')).to.deep.equal({
+          unit: 'grammo',
+          quantity: '100',
+          symbol: 'g',
+          ingredient: 'farina',
+          minQty: '100',
+          maxQty: '100',
+        });
+      });
+      it('"1 spicchio d\'aglio"', () => {
+        expect(parse('1 spicchio d\'aglio', 'ita')).to.deep.equal({
+          unit: 'spicchio',
+          quantity: '1',
+          symbol: null,
+          ingredient: 'aglio',
+          minQty: '1',
+          maxQty: '1',
+        });
+      });
+      it('"1 kilogrammo d\'aglio"', () => {
+        expect(parse('1 kilogrammo d\'aglio', 'ita')).to.deep.equal({
+          unit: 'chilogrammo',
+          quantity: '1',
+          symbol: 'kg',
+          ingredient: 'aglio',
+          minQty: '1',
+          maxQty: '1',
+        });
+      });
+      it('"1 cucchiaino  riso"', () => {
+        expect(parse('1 cucchiaino  riso', 'ita')).to.deep.equal({
+          unit: 'cucchiaino',
+          quantity: '1',
+          symbol: 'cc',
+          ingredient: 'riso',
+          minQty: '1',
+          maxQty: '1',
+        });
+      });
+      it('"100 litri di latte"', () => {
+        expect(parse('100 litri di latte', 'ita')).to.deep.equal({
+          unit: 'litro',
+          quantity: '100',
+          symbol: 'lt',
+          ingredient: 'latte',
+          minQty: '100',
+          maxQty: '100',
+        });
+      });
+      it('"100 milligrammi di olio"', () => {
+        expect(parse('100 milligrammi di olio', 'ita')).to.deep.equal({
+          unit: 'milligrammo',
+          quantity: '100',
+          symbol: 'mg',
+          ingredient: 'olio',
+          minQty: '100',
+          maxQty: '100',
+        });
+      });
+      it('"100 millilitri di latte"', () => {
+        expect(parse('100 millilitri di latte', 'ita')).to.deep.equal({
+          unit: 'millilitro',
+          quantity: '100',
+          symbol: 'ml',
+          ingredient: 'latte',
+          minQty: '100',
+          maxQty: '100',
+        });
       });
     });
   });
@@ -624,6 +714,7 @@ describe('recipe parser ita', () => {
   it('translates unit when no unit provided', () => {
     expect(parse('1 tortilla', 'ita')).to.deep.equal({
       unit: null,
+      symbol: null,
       ingredient: 'tortilla',
       quantity: '1',
       minQty: '1',
@@ -634,6 +725,7 @@ describe('recipe parser ita', () => {
   it('doesn\'t explode when no unit and no quantity provided', () => {
     expect(parse('zucchero a velo', 'ita')).to.deep.equal({
       unit: null,
+      symbol: null,
       ingredient: 'zucchero a velo',
       quantity: null,
       minQty: null,
@@ -746,6 +838,7 @@ describe('combine ingredients', () => {
         ingredient: 'butter',
         quantity: '2',
         unit: 'tablespoon',
+        symbol: 'tbs',
         minQty: '2',
         maxQty: '2',
       },
@@ -753,6 +846,7 @@ describe('combine ingredients', () => {
         ingredient: 'apples',
         quantity: '2',
         unit: 'pound',
+        symbol: 'lb',
         minQty: '2',
         maxQty: '2',
       }
@@ -762,6 +856,7 @@ describe('combine ingredients', () => {
         ingredient: 'apples',
         quantity: '2',
         unit: 'pound',
+        symbol: 'lb',
         minQty: '2',
         maxQty: '2',
       },
@@ -769,6 +864,7 @@ describe('combine ingredients', () => {
         ingredient: 'butter',
         quantity: '2',
         unit: 'tablespoon',
+        symbol: 'tbs',
         minQty: '2',
         maxQty: '2',
       }
@@ -781,6 +877,7 @@ describe('combine ingredients', () => {
         ingredient: 'butter',
         quantity: '2',
         unit: 'tablespoon',
+        symbol: 'tbs',
         minQty: '2',
         maxQty: '2',
       },
@@ -788,6 +885,7 @@ describe('combine ingredients', () => {
         ingredient: 'butter',
         quantity: '2',
         unit: 'tablespoon',
+        symbol: 'tbs',
         minQty: '2',
         maxQty: '2',
       }
@@ -797,6 +895,7 @@ describe('combine ingredients', () => {
         ingredient: 'butter',
         quantity: '4',
         unit: 'tablespoon',
+        symbol: 'tbs',
         minQty: '4',
         maxQty: '4',
       }
@@ -809,6 +908,7 @@ describe('combine ingredients', () => {
         ingredient: 'butter',
         quantity: '2',
         unit: 'tablespoon',
+        symbol: 'tbs',
         minQty: '2',
         maxQty: '2',
       },
@@ -816,6 +916,7 @@ describe('combine ingredients', () => {
         ingredient: 'butter',
         quantity: '2',
         unit: 'tablespoon',
+        symbol: 'tbs',
         minQty: '2',
         maxQty: '2',
       },
@@ -823,6 +924,7 @@ describe('combine ingredients', () => {
         ingredient: 'butter',
         quantity: '2',
         unit: 'tablespoon',
+        symbol: 'tbs',
         minQty: '2',
         maxQty: '2',
       }
@@ -832,6 +934,7 @@ describe('combine ingredients', () => {
         ingredient: 'butter',
         quantity: '6',
         unit: 'tablespoon',
+        symbol: 'tbs',
         minQty: '6',
         maxQty: '6',
       }
@@ -1047,6 +1150,7 @@ describe('combine ingredients', () => {
         ingredient: 'tortilla',
         quantity: '10',
         unit: null,
+        symbol: null,
         minQty: '10',
         maxQty: '10',
       },
@@ -1054,6 +1158,7 @@ describe('combine ingredients', () => {
         ingredient: 'tortilla',
         quantity: '5',
         unit: null,
+        symbol: null,
         minQty: '5',
         maxQty: '5',
       }
@@ -1063,6 +1168,7 @@ describe('combine ingredients', () => {
         ingredient: 'tortilla',
         quantity: '15',
         unit: null,
+        symbol: null,
         minQty: '15',
         maxQty: '15',
       }
@@ -1075,6 +1181,7 @@ describe('combine ingredients', () => {
         ingredient: 'Powdered Sugar',
         quantity: null,
         unit: null,
+        symbol: null,
         minQty: null,
         maxQty: null,
       },
@@ -1082,6 +1189,7 @@ describe('combine ingredients', () => {
         ingredient: 'Powdered Sugar',
         quantity: null,
         unit: null,
+        symbol: null,
         minQty: null,
         maxQty: null,
       }
@@ -1091,6 +1199,7 @@ describe('combine ingredients', () => {
         ingredient: 'Powdered Sugar',
         quantity: null,
         unit: null,
+        symbol: null,
         minQty: null,
         maxQty: null,
       }

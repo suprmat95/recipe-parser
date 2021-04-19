@@ -17,22 +17,29 @@ function getUnit(input: string, language: string) {
   let unit = unitsMap.get(language)
   let units = unit[0];
   let pluralUnits = unit[1];
+  let symbolUnits = unit[3]
+  let response = [] as string[];
+
   if (units[input] || pluralUnits[input]) {
-    return [input];
+    response =  [input];
   }
   for (const unit of Object.keys(units)) {
     for (const shorthand of units[unit]) {
       if (input === shorthand) {
-        return [unit, input];
+        response = [unit, input];
       }
     }
   }
   for (const pluralUnit of Object.keys(pluralUnits)) {
     if (input === pluralUnits[pluralUnit]) {
-      return [pluralUnit, input];
+      response = [pluralUnit, input];
     }
-  }
-  return [];
+  }  
+  
+  let symbol = symbolUnits[response[0]]
+  response.splice(1, 0, symbol)
+  
+  return response
 }
 
 /* return the proposition if it's used before of the name of
@@ -67,7 +74,7 @@ export function parse(recipeString: string, language: string) {
   }
 
   // grab unit and turn it into non-plural version, for ex: "Tablespoons" OR "Tsbp." --> "tablespoon"
-  const [unit, originalUnit] = getUnit(restOfIngredient.split(' ')[0], language) as string[]
+  const [unit, symbol, originalUnit] = getUnit(restOfIngredient.split(' ')[0], language) as string[]
   // remove unit from the ingredient if one was found and trim leading and trailing whitespace
   let ingredient = !!originalUnit ? restOfIngredient.replace(originalUnit, '').trim() : restOfIngredient.replace(unit, '').trim();
 
@@ -88,6 +95,7 @@ export function parse(recipeString: string, language: string) {
   return {
     quantity,
     unit: !!unit ? unit : null,
+    symbol: !!symbol ? symbol : null,
     ingredient: extraInfo ? `${ingredient} ${extraInfo}` : ingredient,
     minQty,
     maxQty,
