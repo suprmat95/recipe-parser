@@ -82,7 +82,7 @@ export function feach(w: string, g: number, n: number, language: string) {
 
 export function findQuantityAndConvertIfUnicode(ingredientLine: string, language: string) {
   const numericAndFractionRegex = /^(\d+\/\d+)|(\d+\s\d+\/\d+)|(\d+.\d+)|\d+/g;
-  const numericRangeWithSpaceRegex = /^(\d+\-\d+)|^(\d+\s\-\s\d+)|^(\d+\sto\s\d+)/g; // for ex: "1 to 2" or "1 - 2"
+  //const numericRangeWithSpaceRegex = /^(\d+\-\d+)|^(\d+\s\-\s\d+)|^(\d+\sto\s\d+)/g; // for ex: "1 to 2" or "1 - 2"
   const unicodeFractionRegex = /\d*[^\u0000-\u007F]+/g;
   const onlyUnicodeFraction = /[^\u0000-\u007F]+/g;
   const wordUntilSpace = /[^\s]+/g;
@@ -99,11 +99,11 @@ export function findQuantityAndConvertIfUnicode(ingredientLine: string, language
   }
 
   // found a quantity range, for ex: "2 to 3"
-  if (ingredientLine.match(numericRangeWithSpaceRegex)) {
-    const quantity = getFirstMatch(ingredientLine, numericRangeWithSpaceRegex).replace('to', '-').split(' ').join('');
-    const restOfIngredient = ingredientLine.replace(getFirstMatch(ingredientLine, numericRangeWithSpaceRegex), '').trim();
-    return [ingredientLine.match(numericRangeWithSpaceRegex) && quantity, restOfIngredient];
-  }
+ // if (ingredientLine.match(numericRangeWithSpaceRegex)) {
+ //   const quantity = getFirstMatch(ingredientLine, numericRangeWithSpaceRegex).replace('to', '-').split(' ').join('');
+ //   const restOfIngredient = ingredientLine.replace(getFirstMatch(ingredientLine, numericRangeWithSpaceRegex), '').trim();
+ //   return [ingredientLine.match(numericRangeWithSpaceRegex) && quantity, restOfIngredient];
+ // }
 
   // found a numeric/fraction quantity, for example: "1 1/3"
   if (ingredientLine.match(numericAndFractionRegex)) {

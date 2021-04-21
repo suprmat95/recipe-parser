@@ -54,11 +54,6 @@ function getUnit(input: string, secondWord: string, language: string) {
   for (const unit of Object.keys(units)) {
     for (const shorthand of units[unit]) {
       if (input === shorthand) {
-        console.log('UNIT')
-        console.log('unit')
-        console.log(units[unit])
-        console.log('pluralUnit')
-        console.log(pluralUnits[unit])
         response = [unit, pluralUnits[unit], input];
       }
     }
@@ -126,13 +121,13 @@ export function parse(recipeString: string, language: string) {
   }
 
   return {
-    quantity,
+    quantity: +quantity,
     unit: !!unit ? unit : null,
     unitPlural: !!unitPlural ? unitPlural : null,
     symbol: !!symbol ? symbol : null,
     ingredient: extraInfo ? `${ingredient} ${extraInfo}` : ingredient,
-    minQty,
-    maxQty,
+    minQty: +minQty,
+    maxQty: +maxQty,
   };
 }
 
