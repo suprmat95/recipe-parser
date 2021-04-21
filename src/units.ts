@@ -99,7 +99,7 @@ export const itaPluralUnits = {
   cucchiaio: 'cucchiai',
   cucchiaino: 'cucchiaini',
   grammo: 'grammi',
-  chilogrammo: 'chilogrammo',
+  chilogrammo: 'chilogrammi',
   litro: 'litri',
   milligrammo: 'milligrammi',
   millilitro: 'millilitri',
@@ -112,7 +112,7 @@ export const itaPluralUnits = {
   panetto: 'panetti',
   foglia: 'foglie',
   mazzetto: 'mazzetti',
-  vasetto: 'vasetto'
+  vasetto: 'vasetti'
 } as { [key: string]: string };
 
 export const itaNameToSymbol = {

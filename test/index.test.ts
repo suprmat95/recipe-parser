@@ -7,26 +7,26 @@ describe('recipe parser eng', () => {
   });
 
   describe('translates the quantity', () => {
-    it('of "to taste teaspoon water"', () => {
-      expect(parse('to taste teaspoon water', 'eng').quantity).to.equal('t.t.');
+    it('of "to taste of water"', () => {
+      expect(parse('to taste of water', 'eng').unit).to.equal('t.t.');
     });
-    it('of "To taste teaspoon water"', () => {
-      expect(parse('To taste teaspoon water', 'eng').quantity).to.equal('t.t.');
+    it('of "To taste of water"', () => {
+      expect(parse('To taste of water', 'eng').unit).to.equal('t.t.');
     }); 
-    it('of "t.t. teaspoon water"', () => {
-      expect(parse('t.t. teaspoon water', 'eng').quantity).to.equal('t.t.');
+    it('of "t.t. of water"', () => {
+      expect(parse('t.t. of water', 'eng').unit).to.equal('t.t.');
     });
-    it('of "t.t. teaspoon water"', () => {
-      expect(parse('t.t. teaspoon water', 'eng').quantity).to.equal('t.t.');
+    it('of "t.t. of water"', () => {
+      expect(parse('t.t. of water', 'eng').unit).to.equal('t.t.');
     });
-    it('of "TT teaspoon water"', () => {
-      expect(parse('TT teaspoon water', 'eng').quantity).to.equal('t.t.');
+    it('of "TT of water"', () => {
+      expect(parse('TT of water', 'eng').unit).to.equal('t.t.');
     });
-    it('of "TT. teaspoon water"', () => {
-      expect(parse('TT. teaspoon water', 'eng').quantity).to.equal('t.t.');
+    it('of "TT. of water"', () => {
+      expect(parse('TT. of water', 'eng').unit).to.equal('t.t.');
     });
-    it('of "T.t teaspoon water"', () => {
-      expect(parse('T.t teaspoon water', 'eng').quantity).to.equal('t.t.');
+    it('of "T.t of water"', () => {
+      expect(parse('T.t of water', 'eng').unit).to.equal('t.t.');
     });
     it('of "1 teaspoon water"', () => {
       expect(parse('1 teaspoon water', 'eng').quantity).to.equal('1');
@@ -365,30 +365,30 @@ describe('recipe parser ita', () => {
     expect(typeof parse('1 tazza acqua', 'ita')).to.equal('object');
   });
 
-  describe('translates the quantity', () => {
-    it('of "quanto basta cucchiao acqua"', () => {
-      expect(parse('quanto basta di acqua', 'ita').quantity).to.equal('q.b.');
+  describe('translates the unit', () => {
+    it('of "quanto basta  acqua"', () => {
+      expect(parse('quanto basta di acqua', 'ita').unit).to.equal('q.b.');
     });
-    it('of "Quanto basta cucchiao acqua"', () => {
-      expect(parse('Quanto basta di acqua', 'ita').quantity).to.equal('q.b.');
+    it('of "Quanto basta  acqua"', () => {
+      expect(parse('Quanto basta di acqua', 'ita').unit).to.equal('q.b.');
     });
-    it('of "Quanto Basta cucchiao acqua"', () => {
-      expect(parse('Quanto Basta di acqua', 'ita').quantity).to.equal('q.b.');
+    it('of "Quanto Basta  acqua"', () => {
+      expect(parse('Quanto Basta di acqua', 'ita').unit).to.equal('q.b.');
     });
-    it('of "q.b. cucchiao acqua"', () => {
-      expect(parse('q.b. cucchiao acqua', 'ita').quantity).to.equal('q.b.');
+    it('of "q.b.  acqua"', () => {
+      expect(parse('q.b. di acqua', 'ita').unit).to.equal('q.b.');
     });
-    it('of "Q.B. cucchiao acqua"', () => {
-      expect(parse('Q.B. cucchiao acqua', 'ita').quantity).to.equal('q.b.');
+    it('of "Q.B. di acqua"', () => {
+      expect(parse('Q.B. di acqua', 'ita').unit).to.equal('q.b.');
     });
-    it('of "QB cucchiao acqua"', () => {
-      expect(parse('QB cucchiao acqua', 'ita').quantity).to.equal('q.b.');
+    it('of "QB di acqua"', () => {
+      expect(parse('QB di acqua', 'ita').unit).to.equal('q.b.');
     });
-    it('of "QB. cucchiao acqua"', () => {
-      expect(parse('QB. cucchiao acqua', 'ita').quantity).to.equal('q.b.');
+    it('of "QB. di acqua"', () => {
+      expect(parse('QB. di acqua', 'ita').unit).to.equal('q.b.');
     });
-    it('of "Q.B cucchiao acqua"', () => {
-      expect(parse('Q.b cucchiao acqua', 'ita').quantity).to.equal('q.b.');
+    it('of "Q.B di acqua"', () => {
+      expect(parse('Q.b di acqua', 'ita').unit).to.equal('q.b.');
     });
     it('of "1 cucchiao acqua"', () => {
       expect(parse('1 cucchiao acqua', 'ita').quantity).to.equal('1');
@@ -578,7 +578,7 @@ describe('recipe parser ita', () => {
       });
     });
     it('"parses ingredient with range: 1 to 2 petto di pollo"', () => {
-      expect(parse('1 to 2 petto di pollo', 'eng')).to.deep.equal({
+      expect(parse('1 to 2 petto di pollo', 'ita')).to.deep.equal({
         unit: null,
         symbol: null,
         quantity: '1-2',
@@ -588,7 +588,7 @@ describe('recipe parser ita', () => {
       });
     });
     it('"parses ingredient with range: 1 - 2  petto di pollo"', () => {
-      expect(parse('1 - 2 petto di pollo', 'eng')).to.deep.equal({
+      expect(parse('1 - 2 petto di pollo', 'ita')).to.deep.equal({
         unit: null,
         symbol: null,
         quantity: '1-2',
@@ -706,6 +706,46 @@ describe('recipe parser ita', () => {
           ingredient: 'latte',
           minQty: '100',
           maxQty: '100',
+        });
+      });
+      it('"quanto basta  di latte"', () => {
+        expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
+          unit: "q.b.",
+          quantity: null,
+          symbol: null,
+          ingredient: 'latte',
+          minQty: null,
+          maxQty: null,
+        });
+      });
+      it('"Quanto Basta  di latte"', () => {
+        expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
+          unit: "q.b.",
+          quantity: null,
+          symbol: null,
+          ingredient: 'latte',
+          minQty: null,
+          maxQty: null,
+        });
+      });
+      it('"qb  di latte"', () => {
+        expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
+          unit: "q.b.",
+          quantity: null,
+          symbol: null,
+          ingredient: 'latte',
+          minQty: null,
+          maxQty: null,
+        });
+      });
+      it('"q.b.  di latte"', () => {
+        expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
+          unit: "q.b.",
+          quantity: null,
+          symbol: null,
+          ingredient: 'latte',
+          minQty: null,
+          maxQty: null,
         });
       });
     });

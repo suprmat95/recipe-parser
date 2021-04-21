@@ -1,4 +1,4 @@
-import { numbersMap, toTasteMap} from './numbers';
+import { numbersMap} from './numbers';
 
 export function convertFromFraction(value: string) {
   // number comes in, for example: 1 1/3
@@ -41,20 +41,9 @@ const unicodeObj: { [key: string]: string } = {
   '⅑': '1/9',
   '⅒': '1/10'
 };
-
 export function text2num(s: string, language: string) {
-  const toTaste = toTasteMap[language]
-  const firstLetter = toTaste.match(/\b(\w)/g);
   const a = s.toString().split(/[\s-]+/);
   let values: number[]=[0,0];
-
-  if(firstLetter){
-    const regExString = firstLetter.join('[.]?') +'[.]?'
-    const regEx = new RegExp(regExString, 'gi')
-    if(a[0].match(regEx)){
-      return (firstLetter.join('.') +'.').toLocaleLowerCase()
-    }
-  }
   a.forEach(x =>{
     values = feach(x, values[0], values[1], language)
   });
@@ -97,8 +86,6 @@ export function findQuantityAndConvertIfUnicode(ingredientLine: string, language
   const unicodeFractionRegex = /\d*[^\u0000-\u007F]+/g;
   const onlyUnicodeFraction = /[^\u0000-\u007F]+/g;
   const wordUntilSpace = /[^\s]+/g;
-  const wordToTaste = toTasteMap[language]
-  const regexToTaste= new RegExp(wordToTaste,'gi')
 
   // found a unicode quantity inside our regex, for ex: '⅝'
   if (ingredientLine.match(unicodeFractionRegex)) {
@@ -123,15 +110,6 @@ export function findQuantityAndConvertIfUnicode(ingredientLine: string, language
     const quantity = getFirstMatch(ingredientLine, numericAndFractionRegex);
     const restOfIngredient = ingredientLine.replace(getFirstMatch(ingredientLine, numericAndFractionRegex), '').trim()
     return [ingredientLine.match(numericAndFractionRegex) && quantity, restOfIngredient];
-  }
-  if (ingredientLine.match(regexToTaste)) {
-    const toTaste = getFirstMatch(ingredientLine, regexToTaste);
-    const fistLetter = toTaste.match(/\b(\w)/g)
-    if(fistLetter){
-      const outPut = (fistLetter.join('.') +'.').toLocaleLowerCase()
-      const restOfIngredient = ingredientLine.replace(getFirstMatch(ingredientLine, regexToTaste), '').trim()
-      return [ingredientLine.match(regexToTaste) && outPut, restOfIngredient];
-    }
   }
   else if(ingredientLine.match(wordUntilSpace)) {
     const quantity = getFirstMatch(ingredientLine, wordUntilSpace);

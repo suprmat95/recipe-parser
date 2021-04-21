@@ -1,6 +1,8 @@
 import * as convert from './convert';
 import { unitsMap} from './units';
 import { repeatingFractions } from './repeatingFractions';
+import {toTasteMap} from './numbers';
+
 //import * as Natural from 'natural';
 
 //const nounInflector = new Natural.NounInflector();
@@ -13,13 +15,38 @@ export interface Ingredient {
   maxQty: string | null;
 }
 
-function getUnit(input: string, language: string) {
+export function toTasteRecognize(firstWord: string, secondWord: string, language: string){
+  const toTaste = toTasteMap[language]
+  const firstLetter = toTaste.match(/\b(\w)/g);
+  //componing first two word
+  const word = firstWord.concat(' ').concat(secondWord)
+  
+  if(firstLetter){
+    //checking the extended version
+    if(word.toLowerCase() === toTaste.toLocaleLowerCase()){
+      return (firstLetter.join('.') +'.').toLocaleLowerCase()
+    }
+    const regExString = firstLetter.join('[.]?') +'[.]?'
+    const regEx = new RegExp(regExString, 'gi')
+    const a = firstWord.toString().split(/[\s-]+/);
+    if(a[0].match(regEx)){
+      return (firstLetter.join('.') +'.').toLocaleLowerCase()
+    }
+  }
+  return false
+}
+
+function getUnit(input: string, secondWord: string, language: string) {
+  const word = input.concat(' ').concat(secondWord)
   let unit = unitsMap.get(language)
   let units = unit[0];
   let pluralUnits = unit[1];
   let symbolUnits = unit[3]
   let response = [] as string[];
-
+  const toTaste = toTasteRecognize(input, secondWord, language)
+  if(toTaste){
+    response = [toTaste, word];
+  }
   if (units[input] || pluralUnits[input]) {
     response =  [input];
   }
@@ -74,7 +101,13 @@ export function parse(recipeString: string, language: string) {
   }
 
   // grab unit and turn it into non-plural version, for ex: "Tablespoons" OR "Tsbp." --> "tablespoon"
-  const [unit, symbol, originalUnit] = getUnit(restOfIngredient.split(' ')[0], language) as string[]
+  const [unit, symbol, originalUnit] = getUnit(restOfIngredient.split(' ')[0], restOfIngredient.split(' ')[1], language) as string[]
+  console.log('Unit:')
+  console.log(unit)
+  console.log('Symbol:')
+  console.log(symbol)
+  console.log('OriginalUnit')
+  console.log(originalUnit)
   // remove unit from the ingredient if one was found and trim leading and trailing whitespace
   let ingredient = !!originalUnit ? restOfIngredient.replace(originalUnit, '').trim() : restOfIngredient.replace(unit, '').trim();
 
