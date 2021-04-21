@@ -45,26 +45,32 @@ function getUnit(input: string, secondWord: string, language: string) {
   let response = [] as string[];
   const toTaste = toTasteRecognize(input, secondWord, language)
   if(toTaste){
-    response = [toTaste, word];
+    response = [toTaste, '', word];
   }
   if (units[input] || pluralUnits[input]) {
-    response =  [input];
+
+    response =  [input, pluralUnits[input], input ];
   }
   for (const unit of Object.keys(units)) {
     for (const shorthand of units[unit]) {
       if (input === shorthand) {
-        response = [unit, input];
+        console.log('UNIT')
+        console.log('unit')
+        console.log(units[unit])
+        console.log('pluralUnit')
+        console.log(pluralUnits[unit])
+        response = [unit, pluralUnits[unit], input];
       }
     }
   }
   for (const pluralUnit of Object.keys(pluralUnits)) {
     if (input === pluralUnits[pluralUnit]) {
-      response = [pluralUnit, input];
+      response = [pluralUnit, pluralUnits[pluralUnit], input];
     }
   }  
   
   let symbol = symbolUnits[response[0]]
-  response.splice(1, 0, symbol)
+  response.splice(2, 0, symbol)
   
   return response
 }
@@ -101,13 +107,7 @@ export function parse(recipeString: string, language: string) {
   }
 
   // grab unit and turn it into non-plural version, for ex: "Tablespoons" OR "Tsbp." --> "tablespoon"
-  const [unit, symbol, originalUnit] = getUnit(restOfIngredient.split(' ')[0], restOfIngredient.split(' ')[1], language) as string[]
-  console.log('Unit:')
-  console.log(unit)
-  console.log('Symbol:')
-  console.log(symbol)
-  console.log('OriginalUnit')
-  console.log(originalUnit)
+  const [unit, unitPlural, symbol, originalUnit] = getUnit(restOfIngredient.split(' ')[0], restOfIngredient.split(' ')[1], language) as string[]
   // remove unit from the ingredient if one was found and trim leading and trailing whitespace
   let ingredient = !!originalUnit ? restOfIngredient.replace(originalUnit, '').trim() : restOfIngredient.replace(unit, '').trim();
 
@@ -128,6 +128,7 @@ export function parse(recipeString: string, language: string) {
   return {
     quantity,
     unit: !!unit ? unit : null,
+    unitPlural: !!unitPlural ? unitPlural : null,
     symbol: !!symbol ? symbol : null,
     ingredient: extraInfo ? `${ingredient} ${extraInfo}` : ingredient,
     minQty,

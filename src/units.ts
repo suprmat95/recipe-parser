@@ -71,7 +71,7 @@ export const engPreposition = ['of'];
 
 
 export const itaUnits = {
-  bicchiere: ['bicchiere', 'bicchieri'],
+  bicchiere: ['bicchiere'],
   bustina: ['bustina', 'bustine'],
   cucchiaio: ['Cucchiaio', 'Cucchiai'],
   cucchiaino: ['Cucchiaino', 'Cucchiaini','cucchiaini'],
@@ -79,15 +79,18 @@ export const itaUnits = {
   chilogrammo: ['kg', 'kg.', 'KG','Kg', 'Kg.', 'Chilogrammo', 'chilogrammi', 'Chilogrammi','kilogrammo', 'Kilogrammo'],
   fetta: ['fetta', 'fette'],
   foglia: ['Foglia','foglie'],
-  litro: ['l', 'l.', 'L', 'L.', 'lt','Litro', 'litri'],
+  litro: ['l', 'l.', 'L', 'L.', 'lt','Litro'],
   mazzetto: ['Mazzetto','mazzetti'],
-  milligrammo: ['mg', 'mg.', 'Milligrammo','milligrammi'],
-  millilitro: ['ml', 'ml.', 'mL', 'mL.', 'Millilitro','millilitri'],
+  lattina: ['Lattina'],
+  milligrammo: ['mg', 'mg.', 'Milligrammo'],
+  millilitro: ['ml', 'ml.', 'mL', 'mL.', 'Millilitro'],
   panetto: ['Panetto', 'panetti'],
-  pacco: ['pkg', 'pkgs', 'pacchetto','Pacchetto','Pacco', 'pacchi'],
+  pacco: ['pkg', 'pkgs', 'pacchetto','Pacchetto','Pacco'],
   pezzo: ['pcs', 'pcs.','pezzi'],
   pizzico: ['Pizzico','pizzichi'],
-  tazza: [ 'Tazza', 'tazzina', 'Tazzina','tazzine', 'tazze'],
+  tazza: [ 'Tazza', 'tazzina', 'Tazzina','tazzine'],
+  spicchio: ['Spicchi'],
+  scatola: ['Scatole'],
   vasetto: ['Vasetto', 'vasetti'],
 } as { [key: string]: string[] };
 

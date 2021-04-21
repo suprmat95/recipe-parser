@@ -102,6 +102,7 @@ describe('recipe parser eng', () => {
       expect(parse('1/3 cup confectioners’ sugar', 'eng')).to.deep.equal({
         quantity: '0.333',
         unit: 'cup',
+        unitPlural: 'cups',
         symbol: 'c',
         ingredient: 'confectioners’ sugar',
         minQty: '0.333',
@@ -171,6 +172,7 @@ describe('recipe parser eng', () => {
     it('"1 (14.5 oz) can tomatoes"', () => {
       expect(parse('1 (14.5 oz) can tomatoes', 'eng')).to.deep.equal({
         unit: 'can',
+        unitPlural: 'cans',
         symbol: null,
         quantity: '1',
         ingredient: 'tomatoes (14.5 oz)',
@@ -181,6 +183,7 @@ describe('recipe parser eng', () => {
     it('"25 lb beef stew chunks (or buy a roast and chop into small cubes)"', () => {
       expect(parse('25 lb beef stew chunks (or buy a roast and chop into small cubes)', 'eng')).to.deep.equal({
         unit: 'pound',
+        unitPlural: 'pounds',
         symbol: 'lb',
         quantity: '25',
         ingredient: 'beef stew chunks (or buy a roast and chop into small cubes)',
@@ -191,6 +194,7 @@ describe('recipe parser eng', () => {
     it('"parses ingredient with range: 1 to 2 chicken breasts"', () => {
       expect(parse('1 to 2 chicken breasts', 'eng')).to.deep.equal({
         unit: null,
+        unitPlural: null,
         symbol: null,
         quantity: '1-2',
         ingredient: 'chicken breasts',
@@ -201,6 +205,7 @@ describe('recipe parser eng', () => {
     it('"parses ingredient with range: 1 - 2 chicken breasts"', () => {
       expect(parse('1 - 2 chicken breasts', 'eng')).to.deep.equal({
         unit: null,
+        unitPlural: null,
         symbol: null,
         quantity: '1-2',
         ingredient: 'chicken breasts',
@@ -211,6 +216,7 @@ describe('recipe parser eng', () => {
     it('"parses ingredient with range: 1-2 chicken breasts"', () => {
       expect(parse('1-2 chicken breasts', 'eng')).to.deep.equal({
         unit: null,
+        unitPlural: null,
         symbol: null,
         quantity: '1-2',
         ingredient: 'chicken breasts',
@@ -221,6 +227,7 @@ describe('recipe parser eng', () => {
     it('"1 (16 oz) box pasta"', () => {
       expect(parse('1 (16 oz) box pasta', 'eng')).to.deep.equal({
         unit: 'box',
+        unitPlural: 'boxes',
         symbol: null,
         quantity: '1',
         ingredient: 'pasta (16 oz)',
@@ -231,6 +238,7 @@ describe('recipe parser eng', () => {
     it('"1 slice cheese"', () => {
       expect(parse('1 slice cheese', 'eng')).to.deep.equal({
         unit: 'slice',
+        unitPlural: 'slices',
         symbol: null,
         quantity: '1',
         ingredient: 'cheese',
@@ -243,6 +251,7 @@ describe('recipe parser eng', () => {
   it('translates unit when no unit provided', () => {
     expect(parse('1 tortilla', 'eng')).to.deep.equal({
       unit: null,
+      unitPlural: null,
       symbol: null,
       ingredient: 'tortilla',
       quantity: '1',
@@ -256,6 +265,7 @@ describe('recipe parser eng', () => {
         ingredient: 'Powdered Sugar',
         quantity: null,
         unit: null,
+        unitPlural: null,
         symbol: null,
         minQty: null,
         maxQty: null,
@@ -492,6 +502,7 @@ describe('recipe parser ita', () => {
       expect(parse('1/3 tazza zucchero a velo', 'ita')).to.deep.equal({
         quantity: '0.333',
         unit: 'tazza',
+        unitPlural: 'tazze',
         symbol: null,
         ingredient: 'zucchero a velo',
         minQty: '0.333',
@@ -570,6 +581,7 @@ describe('recipe parser ita', () => {
     it('"1 (14.5 oz) lattina pommodori"', () => {
       expect(parse('1 (14.5 oz) lattina pommodori', 'ita')).to.deep.equal({
         unit: 'lattina',
+        unitPlural: 'lattine',
         symbol: null,
         quantity: '1',
         ingredient: 'pommodori (14.5 oz)',
@@ -580,6 +592,7 @@ describe('recipe parser ita', () => {
     it('"parses ingredient with range: 1 to 2 petto di pollo"', () => {
       expect(parse('1 to 2 petto di pollo', 'ita')).to.deep.equal({
         unit: null,
+        unitPlural: null,
         symbol: null,
         quantity: '1-2',
         ingredient: 'petto di pollo',
@@ -590,6 +603,7 @@ describe('recipe parser ita', () => {
     it('"parses ingredient with range: 1 - 2  petto di pollo"', () => {
       expect(parse('1 - 2 petto di pollo', 'ita')).to.deep.equal({
         unit: null,
+        unitPlural: null,
         symbol: null,
         quantity: '1-2',
         ingredient: 'petto di pollo',
@@ -600,6 +614,7 @@ describe('recipe parser ita', () => {
     it('"parses ingredient with range: 1-2 petto di pollo"', () => {
       expect(parse('1-2 petto di pollo', 'ita')).to.deep.equal({
         unit: null,
+        unitPlural: null,
         symbol: null,
         quantity: '1-2',
         ingredient: 'petto di pollo',
@@ -610,6 +625,7 @@ describe('recipe parser ita', () => {
     it('"1 (16 oz) scatola pasta"', () => {
       expect(parse('1 (16 oz) scatola pasta', 'ita')).to.deep.equal({
         unit: 'scatola',
+        unitPlural: 'scatole',
         symbol: null,
         quantity: '1',
         ingredient: 'pasta (16 oz)',
@@ -620,6 +636,7 @@ describe('recipe parser ita', () => {
     it('"1 fetta di formaggio"', () => {
       expect(parse('1 fetta di formaggio', 'ita')).to.deep.equal({
         unit: 'fetta',
+        unitPlural: 'fette',
         quantity: '1',
         symbol: null,
         ingredient: 'formaggio',
@@ -630,6 +647,7 @@ describe('recipe parser ita', () => {
     it('"1 spicchio d\'aglio"', () => {
       expect(parse('1 spicchio d\'aglio', 'ita')).to.deep.equal({
         unit: 'spicchio',
+        unitPlural: 'spicchi',
         quantity: '1',
         symbol: null,
         ingredient: 'aglio',
@@ -641,6 +659,7 @@ describe('recipe parser ita', () => {
       it('"100 grammi di farina"', () => {
         expect(parse('100 grammi di farina', 'ita')).to.deep.equal({
           unit: 'grammo',
+          unitPlural: 'grammi',
           quantity: '100',
           symbol: 'g',
           ingredient: 'farina',
@@ -651,6 +670,7 @@ describe('recipe parser ita', () => {
       it('"1 spicchio d\'aglio"', () => {
         expect(parse('1 spicchio d\'aglio', 'ita')).to.deep.equal({
           unit: 'spicchio',
+          unitPlural: 'spicchi',
           quantity: '1',
           symbol: null,
           ingredient: 'aglio',
@@ -661,6 +681,7 @@ describe('recipe parser ita', () => {
       it('"1 kilogrammo d\'aglio"', () => {
         expect(parse('1 kilogrammo d\'aglio', 'ita')).to.deep.equal({
           unit: 'chilogrammo',
+          unitPlural: 'chilogrammi',
           quantity: '1',
           symbol: 'kg',
           ingredient: 'aglio',
@@ -668,9 +689,10 @@ describe('recipe parser ita', () => {
           maxQty: '1',
         });
       });
-      it('"1 cucchiaino  riso"', () => {
-        expect(parse('1 cucchiaino  riso', 'ita')).to.deep.equal({
+      it('"1 cucchiaino riso"', () => {
+        expect(parse('1 cucchiaino riso', 'ita')).to.deep.equal({
           unit: 'cucchiaino',
+          unitPlural: 'cucchiaini',
           quantity: '1',
           symbol: 'cc',
           ingredient: 'riso',
@@ -681,6 +703,7 @@ describe('recipe parser ita', () => {
       it('"100 litri di latte"', () => {
         expect(parse('100 litri di latte', 'ita')).to.deep.equal({
           unit: 'litro',
+          unitPlural: 'litri',
           quantity: '100',
           symbol: 'lt',
           ingredient: 'latte',
@@ -691,6 +714,7 @@ describe('recipe parser ita', () => {
       it('"100 milligrammi di olio"', () => {
         expect(parse('100 milligrammi di olio', 'ita')).to.deep.equal({
           unit: 'milligrammo',
+          unitPlural: 'milligrammi',
           quantity: '100',
           symbol: 'mg',
           ingredient: 'olio',
@@ -701,6 +725,7 @@ describe('recipe parser ita', () => {
       it('"100 millilitri di latte"', () => {
         expect(parse('100 millilitri di latte', 'ita')).to.deep.equal({
           unit: 'millilitro',
+          unitPlural: 'millilitri',
           quantity: '100',
           symbol: 'ml',
           ingredient: 'latte',
@@ -711,6 +736,7 @@ describe('recipe parser ita', () => {
       it('"quanto basta  di latte"', () => {
         expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
           unit: "q.b.",
+          unitPlural: null,
           quantity: null,
           symbol: null,
           ingredient: 'latte',
@@ -721,6 +747,7 @@ describe('recipe parser ita', () => {
       it('"Quanto Basta  di latte"', () => {
         expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
           unit: "q.b.",
+          unitPlural: null,
           quantity: null,
           symbol: null,
           ingredient: 'latte',
@@ -731,6 +758,7 @@ describe('recipe parser ita', () => {
       it('"qb  di latte"', () => {
         expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
           unit: "q.b.",
+          unitPlural: null,
           quantity: null,
           symbol: null,
           ingredient: 'latte',
@@ -738,9 +766,10 @@ describe('recipe parser ita', () => {
           maxQty: null,
         });
       });
-      it('"q.b.  di latte"', () => {
+      it('"q.b. di latte"', () => {
         expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
           unit: "q.b.",
+          unitPlural: null,
           quantity: null,
           symbol: null,
           ingredient: 'latte',
@@ -754,6 +783,7 @@ describe('recipe parser ita', () => {
   it('translates unit when no unit provided', () => {
     expect(parse('1 tortilla', 'ita')).to.deep.equal({
       unit: null,
+      unitPlural: null,
       symbol: null,
       ingredient: 'tortilla',
       quantity: '1',
@@ -765,6 +795,7 @@ describe('recipe parser ita', () => {
   it('doesn\'t explode when no unit and no quantity provided', () => {
     expect(parse('zucchero a velo', 'ita')).to.deep.equal({
       unit: null,
+      unitPlural: null,
       symbol: null,
       ingredient: 'zucchero a velo',
       quantity: null,
