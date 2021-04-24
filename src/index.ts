@@ -24,16 +24,16 @@ export function toTasteRecognize(firstWord: string, secondWord: string, language
   if(firstLetter){
     //checking the extended version
     if(word.toLowerCase() === toTaste.toLocaleLowerCase()){
-      return (firstLetter.join('.') +'.').toLocaleLowerCase()
+      return [(firstLetter.join('.') +'.').toLocaleLowerCase(), true]  as [string, boolean]
     }
     const regExString = firstLetter.join('[.]?') +'[.]?'
     const regEx = new RegExp(regExString, 'gi')
     const a = firstWord.toString().split(/[\s-]+/);
     if(a[0].match(regEx)){
-      return (firstLetter.join('.') +'.').toLocaleLowerCase()
+      return [(firstLetter.join('.') +'.').toLocaleLowerCase(), false] as [string, boolean]
     }
   }
-  return false
+  return ['', false]  as [string, boolean]
 }
 
 function getUnit(input: string, secondWord: string, language: string) {
@@ -43,9 +43,16 @@ function getUnit(input: string, secondWord: string, language: string) {
   let pluralUnits = unit[1];
   let symbolUnits = unit[3]
   let response = [] as string[];
-  const toTaste = toTasteRecognize(input, secondWord, language)
-  if(toTaste){
-    response = [toTaste, '', word];
+  const [toTaste, extFlag] = toTasteRecognize(input, secondWord, language)
+  if(toTaste) {
+    if (extFlag){
+      response = [toTaste, '', word];
+    }
+    else
+    {
+      response = [toTaste, '', input];
+
+    }
   }
   if (units[input] || pluralUnits[input]) {
 
@@ -105,7 +112,6 @@ export function parse(recipeString: string, language: string) {
   const [unit, unitPlural, symbol, originalUnit] = getUnit(restOfIngredient.split(' ')[0], restOfIngredient.split(' ')[1], language) as string[]
   // remove unit from the ingredient if one was found and trim leading and trailing whitespace
   let ingredient = !!originalUnit ? restOfIngredient.replace(originalUnit, '').trim() : restOfIngredient.replace(unit, '').trim();
-
   let preposition = getPreposition(ingredient.split(' ')[0], language)
   if(preposition) {
     let regex = new RegExp('^' + preposition )

@@ -376,6 +376,9 @@ describe('recipe parser ita', () => {
   });
 
   describe('translates the unit', () => {
+    it('of "qb  di acqua"', () => {
+      expect(parse('qb di acqua', 'ita').unit).to.equal('q.b.');
+    });
     it('of "quanto basta  acqua"', () => {
       expect(parse('quanto basta di acqua', 'ita').unit).to.equal('q.b.');
     });
@@ -385,8 +388,20 @@ describe('recipe parser ita', () => {
     it('of "Quanto Basta  acqua"', () => {
       expect(parse('Quanto Basta di acqua', 'ita').unit).to.equal('q.b.');
     });
-    it('of "q.b.  acqua"', () => {
-      expect(parse('q.b. di acqua', 'ita').unit).to.equal('q.b.');
+    it('of "q.b.   di farina"', () => {
+      expect(parse('q.b. di farina', 'ita').ingredient).to.equal('farina');
+    });
+    it('of "q.b.  di farina"', () => {
+      expect(parse('q.b. di farina', 'ita').unit).to.equal('q.b.');
+    });
+    it('of "q.b. farina"', () => {
+      expect(parse('q.b. farina', 'ita').ingredient).to.equal('farina');
+    });
+    it('of "grammi farina"', () => {
+      expect(parse('grammi farina', 'ita').unit).to.equal('grammo');
+    });
+    it('of "grammi  farina"', () => {
+      expect(parse('grammi  farina', 'ita').ingredient).to.equal('farina');
     });
     it('of "Q.B. di acqua"', () => {
       expect(parse('Q.B. di acqua', 'ita').unit).to.equal('q.b.');
@@ -656,6 +671,17 @@ describe('recipe parser ita', () => {
       });
     });
     describe('" check the correct symbol"', () => {
+      it('"grammi di farina"', () => {
+        expect(parse('grammi di farina', 'ita')).to.deep.equal({
+          unit: 'grammo',
+          unitPlural: 'grammi',
+          quantity: 0,
+          symbol: 'g',
+          ingredient: 'farina',
+          minQty: 0,
+          maxQty: 0,
+        });
+      });
       it('"100 grammi di farina"', () => {
         expect(parse('100 grammi di farina', 'ita')).to.deep.equal({
           unit: 'grammo',
@@ -767,7 +793,18 @@ describe('recipe parser ita', () => {
         });
       });
       it('"q.b. di latte"', () => {
-        expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
+        expect(parse('q.b.  di latte', 'ita')).to.deep.equal({
+          unit: "q.b.",
+          unitPlural: null,
+          quantity: 0,
+          symbol: null,
+          ingredient: 'latte',
+          minQty: 0,
+          maxQty: 0,
+        });
+      });
+      it('"q.b. latte"', () => {
+        expect(parse('q.b.  latte', 'ita')).to.deep.equal({
           unit: "q.b.",
           unitPlural: null,
           quantity: 0,
