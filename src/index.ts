@@ -15,62 +15,66 @@ export interface Ingredient {
   maxQty: string | null;
 }
 
-export function toTasteRecognize(firstWord: string, secondWord: string, language: string){
+export function toTasteRecognize(input: string, language: string){
   const toTaste = toTasteMap[language]
   const firstLetter = toTaste.match(/\b(\w)/g);
   //componing first two word
-  const word = firstWord.concat(' ').concat(secondWord)
+  //const word = firstWord.concat(' ').concat(secondWord)
   
   if(firstLetter){
     //checking the extended version
-    if(word.toLowerCase() === toTaste.toLocaleLowerCase()){
-      return [(firstLetter.join('.') +'.').toLocaleLowerCase(), true]  as [string, boolean]
+    let regEx = new RegExp(toTaste, 'gi')
+    if(input.match(regEx)){
+      return [(firstLetter.join('.') +'.').toLocaleLowerCase(), convert.getFirstMatch(input, regEx), true]  as [string, string, boolean]
     }
     const regExString = firstLetter.join('[.]?') +'[.]?'
-    const regEx = new RegExp(regExString, 'gi')
-    const a = firstWord.toString().split(/[\s-]+/);
-    if(a[0].match(regEx)){
-      return [(firstLetter.join('.') +'.').toLocaleLowerCase(), false] as [string, boolean]
+    regEx = new RegExp(regExString, 'gi')
+    //const a = input.toString().split(/[\s-]+/);
+    if(input.match(regEx)){
+      return [(firstLetter.join('.') +'.').toLocaleLowerCase(), convert.getFirstMatch(input, regEx), false] as [string, string, boolean]
     }
   }
-  return ['', false]  as [string, boolean]
+  return ['', '', false]  as [string, string, boolean]
 }
 
-function getUnit(input: string, secondWord: string, language: string) {
-  const word = input.concat(' ').concat(secondWord)
+function getUnit(input: string, language: string) {
+ // const word = input.concat(' ').concat(secondWord)
   let unit = unitsMap.get(language)
   let units = unit[0];
   let pluralUnits = unit[1];
   let symbolUnits = unit[3]
   let response = [] as string[];
-  const [toTaste, extFlag] = toTasteRecognize(input, secondWord, language)
+  const [toTaste, match, extFlag] = toTasteRecognize(input, language)
   if(toTaste) {
     if (extFlag){
-      response = [toTaste, '', word];
+      response = [toTaste, '', match];
     }
     else
     {
-      response = [toTaste, '', input];
-
+      response = [toTaste, '', match];
     }
   }
-  if (units[input] || pluralUnits[input]) {
+  else
+  {
+    if (units[input] || pluralUnits[input]) {
 
-    response =  [input, pluralUnits[input], input ];
-  }
-  for (const unit of Object.keys(units)) {
-    for (const shorthand of units[unit]) {
-      if (input === shorthand) {
-        response = [unit, pluralUnits[unit], input];
+      response =  [input, pluralUnits[input], input ];
+    }
+    for (const unit of Object.keys(units)) {
+      for (const shorthand of units[unit]) {
+        const regex = new RegExp('(?=\\b'+shorthand+'\\b)', 'gi')
+        if (input.match(regex)) {
+          response = [unit, pluralUnits[unit], shorthand];
+        }
       }
     }
+    for (const pluralUnit of Object.keys(pluralUnits)) {
+      const regex = new RegExp('(?=\\b'+pluralUnits[pluralUnit]+'\\b)', 'gi')
+      if (input.match(regex)) {
+        response = [pluralUnit, pluralUnits[pluralUnit], pluralUnits[pluralUnit]];
+      }
+    }  
   }
-  for (const pluralUnit of Object.keys(pluralUnits)) {
-    if (input === pluralUnits[pluralUnit]) {
-      response = [pluralUnit, pluralUnits[pluralUnit], input];
-    }
-  }  
-  
   let symbol = symbolUnits[response[0]]
   response.splice(2, 0, symbol)
   
@@ -107,9 +111,8 @@ export function parse(recipeString: string, language: string) {
     extraInfo = convert.getFirstMatch(restOfIngredient, /\(([^\)]+)\)/);
     restOfIngredient = restOfIngredient.replace(extraInfo, '').trim();
   }
-
   // grab unit and turn it into non-plural version, for ex: "Tablespoons" OR "Tsbp." --> "tablespoon"
-  const [unit, unitPlural, symbol, originalUnit] = getUnit(restOfIngredient.split(' ')[0], restOfIngredient.split(' ')[1], language) as string[]
+  const [unit, unitPlural, symbol, originalUnit] = getUnit(restOfIngredient, language) as string[]
   // remove unit from the ingredient if one was found and trim leading and trailing whitespace
   let ingredient = !!originalUnit ? restOfIngredient.replace(originalUnit, '').trim() : restOfIngredient.replace(unit, '').trim();
   let preposition = getPreposition(ingredient.split(' ')[0], language)

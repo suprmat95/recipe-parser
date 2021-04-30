@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { parse } from '../src/index';
-
+/*
 describe('recipe parser eng', () => {
   it('returns an object', () => {
     expect(typeof parse('1 cup water', 'eng')).to.equal('object');
@@ -367,8 +367,7 @@ describe('recipe parser eng', () => {
     });
   });
 });
-
-
+*/
 /////ITALIAN TEST
 describe('recipe parser ita', () => {
   it('returns an object', () => {
@@ -406,6 +405,10 @@ describe('recipe parser ita', () => {
     it('of "Q.B. di acqua"', () => {
       expect(parse('Q.B. di acqua', 'ita').unit).to.equal('q.b.');
     });
+    it('of "acqua quanto basta"', () => {
+      expect(parse('acqua quanto basta', 'ita').unit).to.equal('q.b.');
+    });
+    
     it('of "QB di acqua"', () => {
       expect(parse('QB di acqua', 'ita').unit).to.equal('q.b.');
     });
@@ -473,6 +476,9 @@ describe('recipe parser ita', () => {
       });
       it('due-mila grammi d\'aglio"', () => {
         expect(parse('due-mila grammi d\'aglio', 'ita').quantity).to.equal(2000);
+      });
+      it('due grammi farina"', () => {
+        expect(parse('due grammi farina', 'ita').quantity).to.equal(2);
       });
     });
 
@@ -828,7 +834,63 @@ describe('recipe parser ita', () => {
       maxQty: 1,
     });
   });
-
+  it('test order and case sensitive', () => {
+    expect(parse('tortilla 100 gr', 'ita')).to.deep.equal({
+      unit: 'grammo',
+      unitPlural: 'grammi',
+      symbol: 'g',
+      ingredient: 'tortilla',
+      quantity: 100,
+      minQty: 100,
+      maxQty: 100,
+    });
+    expect(parse('tortilla 100 gr', 'ita')).to.deep.equal({
+      unit: 'grammo',
+      unitPlural: 'grammi',
+      symbol: 'g',
+      ingredient: 'tortilla',
+      quantity: 100,
+      minQty: 100,
+      maxQty: 100,
+    });
+    expect(parse('basilico quanto basta', 'ita')).to.deep.equal({
+      unit: 'q.b.',
+      unitPlural: null,
+      symbol: null,
+      ingredient: 'basilico',
+      quantity: 0,
+      minQty: 0,
+      maxQty: 0,
+    });
+    expect(parse('basilico q.b.', 'ita')).to.deep.equal({
+      unit: 'q.b.',
+      unitPlural: null,
+      symbol: null,
+      ingredient: 'basilico',
+      quantity: 0,
+      minQty: 0,
+      maxQty: 0,
+    });
+    expect(parse('basilico QB', 'ita')).to.deep.equal({
+      unit: 'q.b.',
+      unitPlural: null,
+      symbol: null,
+      ingredient: 'basilico',
+      quantity: 0,
+      minQty: 0,
+      maxQty: 0,
+    });
+    expect(parse('basilico millilitri 100', 'ita')).to.deep.equal({
+      unit: 'millilitro',
+      unitPlural: 'millilitri',
+      symbol: 'ml',
+      ingredient: 'basilico',
+      quantity: 100,
+      minQty: 100,
+      maxQty: 100,
+    });
+    
+  });
   it('doesn\'t explode when no unit and no quantity provided', () => {
     expect(parse('zucchero a velo', 'ita')).to.deep.equal({
       unit: null,
@@ -860,6 +922,9 @@ describe('recipe parser ita', () => {
       expect(parse('2 KG acqua', 'ita').unit).to.equal('chilogrammo');
       expect(parse('1 kilogrammo acqua', 'ita').unit).to.equal('chilogrammo');
       expect(parse('2 Kilogrammo acqua', 'ita').unit).to.equal('chilogrammo');
+      expect(parse('acqua KILOGRAMMO 2', 'ita').unit).to.equal('chilogrammo');
+      expect(parse('acqua KILOGRAMMO due', 'ita').unit).to.equal('chilogrammo');
+
     });
     it('"1 tazza acqua"', () => {
       expect(parse('1 tazza acqua', 'ita').unit).to.equal('tazza');
