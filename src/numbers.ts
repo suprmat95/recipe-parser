@@ -40,6 +40,7 @@ export const engSmall: { [key: string]: number } = {
   export const itaSmall: { [key: string]: number } = {
     'zero': 0,
     'mezzo': 0.5,
+    'mezza': 0.5,
     'metà': 0.5,
     'meta': 0.5,
     'uno': 1,
