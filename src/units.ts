@@ -97,6 +97,13 @@ export const itaUnits = {
   spicchio: ['spicchio', 'spicchi'],
   scatola: ['scatola', 'scatole'],
   vasetto: ['vasetto', 'vasetti'],
+  filo: ['filo'],
+  ciuffo: ['ciuffo'],
+  scatoletta: ['scatoletta'],
+  manciata: ['manciata'],
+  rotolo: ['rotolo'],
+  bicchierino: ['bicchierino'],
+  noce: ['noce'],
 } as { [key: string]: string[] };
 
 export const itaPluralUnits = {
@@ -120,7 +127,14 @@ export const itaPluralUnits = {
   panetto: 'panetti',
   foglia: 'foglie',
   mazzetto: 'mazzetti',
-  vasetto: 'vasetti'
+  vasetto: 'vasetti',
+  filo: 'fili',
+  ciuffo: 'ciuffi',
+  scatoletta: 'scatolette',
+  manciata: 'manciate',
+  rotolo: 'rotoli',
+  bicchierino: 'bicchierini',
+  noce: 'noci'
 } as { [key: string]: string };
 
 export const itaNameToSymbol = {

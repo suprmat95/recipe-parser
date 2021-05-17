@@ -134,7 +134,7 @@ export function parse(recipeString: string, language: string) {
     unit: !!unit ? unit : null,
     unitPlural: !!unitPlural ? unitPlural : null,
     symbol: !!symbol ? symbol : null,
-    ingredient: extraInfo ? `${ingredient} ${extraInfo}` : ingredient,
+    ingredient: extraInfo ? `${ingredient} ${extraInfo}` : ingredient.replace(/( )*\.( )*/g,''),
     minQty: +minQty,
     maxQty: +maxQty,
   };
