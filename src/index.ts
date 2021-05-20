@@ -111,6 +111,10 @@ export function parse(recipeString: string, language: string) {
     extraInfo = convert.getFirstMatch(restOfIngredient, /\(([^\)]+)\)/);
     restOfIngredient = restOfIngredient.replace(extraInfo, '').trim();
   }
+  console.log('resto of string')
+  console.log(restOfIngredient)
+  console.log('resto of string')
+  console.log(restOfIngredient)
   // grab unit and turn it into non-plural version, for ex: "Tablespoons" OR "Tsbp." --> "tablespoon"
   const [unit, unitPlural, symbol, originalUnit] = getUnit(restOfIngredient, language) as string[]
   // remove unit from the ingredient if one was found and trim leading and trailing whitespace
@@ -121,10 +125,16 @@ export function parse(recipeString: string, language: string) {
   
   let ingredient = !!originalUnit ? restOfIngredient.replace(originalUnit, '').trim() : restOfIngredient.replace(unit, '').trim();
   console.log('ingredient')
-  console.log(ingredient)
+  ingredient=ingredient.split('.').join("").trim()
+  console.log('ingredient split')
+  console.log(ingredient.split(' ')[0]) 
   let preposition = getPreposition(ingredient.split(' ')[0], language)
+  console.log('preposition')
+
+  console.log(preposition)
+
   if(preposition) {
-    let regex = new RegExp('^' + preposition )
+    let regex = new RegExp('^' + preposition)
     ingredient = ingredient.replace(regex,'').trim()
   }
   

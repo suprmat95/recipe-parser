@@ -879,6 +879,24 @@ describe('recipe parser ita', () => {
     });
   });
   it('test order and case sensitive', () => {
+    expect(parse('100 ml. tortilla ', 'ita')).to.deep.equal({
+      unit: 'millilitro',
+      unitPlural: 'millilitri',
+      symbol: 'ml',
+      ingredient: 'tortilla',
+      quantity: 100,
+      minQty: 100,
+      maxQty: 100,
+    });
+    expect(parse('100 mg. tortilla ', 'ita')).to.deep.equal({
+      unit: 'milligrammo',
+      unitPlural: 'milligrammi',
+      symbol: 'mg',
+      ingredient: 'tortilla',
+      quantity: 100,
+      minQty: 100,
+      maxQty: 100,
+    });
     expect(parse('100 gr. tortilla ', 'ita')).to.deep.equal({
       unit: 'grammo',
       unitPlural: 'grammi',
@@ -925,15 +943,6 @@ describe('recipe parser ita', () => {
       maxQty: 0,
     });
     expect(parse('basilico millilitri 100', 'ita')).to.deep.equal({
-      unit: 'millilitro',
-      unitPlural: 'millilitri',
-      symbol: 'ml',
-      ingredient: 'basilico',
-      quantity: 100,
-      minQty: 100,
-      maxQty: 100,
-    });
-    expect(parse('basilico ml 100', 'ita')).to.deep.equal({
       unit: 'millilitro',
       unitPlural: 'millilitri',
       symbol: 'ml',
@@ -1025,13 +1034,6 @@ describe('recipe parser ita', () => {
       expect(parse('1 ml acqua', 'ita').unit).to.equal('millilitro');
       expect(parse('1 ml. acqua', 'ita').unit).to.equal('millilitro');
       expect(parse('1 millilitro acqua', 'ita').unit).to.equal('millilitro');
-    });
-    it('"1 ml acqua"', () => {
-      expect(parse('1 ml acqua', 'ita').unit).to.equal('millilitro');
-      expect(parse('1 ml. acqua', 'ita').unit).to.equal('millilitro');
-      expect(parse('1 millilitro acqua', 'ita').unit).to.equal('millilitro');
-      expect(parse('1 millilitro acqua', 'ita').ingredient).to.equal('acqua');
-
     });
     it('"1 pizzico acqua"', () => {
       expect(parse('2 pizzichi sale', 'ita').unit).to.equal('pizzico');
