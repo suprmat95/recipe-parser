@@ -933,6 +933,15 @@ describe('recipe parser ita', () => {
       minQty: 100,
       maxQty: 100,
     });
+    expect(parse('basilico ml 100', 'ita')).to.deep.equal({
+      unit: 'millilitro',
+      unitPlural: 'millilitri',
+      symbol: 'ml',
+      ingredient: 'basilico',
+      quantity: 100,
+      minQty: 100,
+      maxQty: 100,
+    });
   });
   it('doesn\'t explode when no unit and no quantity provided', () => {
     expect(parse('zucchero a velo', 'ita')).to.deep.equal({
@@ -1016,6 +1025,13 @@ describe('recipe parser ita', () => {
       expect(parse('1 ml acqua', 'ita').unit).to.equal('millilitro');
       expect(parse('1 ml. acqua', 'ita').unit).to.equal('millilitro');
       expect(parse('1 millilitro acqua', 'ita').unit).to.equal('millilitro');
+    });
+    it('"1 ml acqua"', () => {
+      expect(parse('1 ml acqua', 'ita').unit).to.equal('millilitro');
+      expect(parse('1 ml. acqua', 'ita').unit).to.equal('millilitro');
+      expect(parse('1 millilitro acqua', 'ita').unit).to.equal('millilitro');
+      expect(parse('1 millilitro acqua', 'ita').ingredient).to.equal('acqua');
+
     });
     it('"1 pizzico acqua"', () => {
       expect(parse('2 pizzichi sale', 'ita').unit).to.equal('pizzico');
