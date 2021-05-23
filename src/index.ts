@@ -135,6 +135,8 @@ export function parse(recipeString: string, language: string) {
 
   if(preposition) {
     let regex = new RegExp('^' + preposition)
+    console.log('ingredient')
+    console.log(ingredient)
     ingredient = ingredient.replace(regex,'').trim()
   }
   

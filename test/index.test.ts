@@ -897,6 +897,33 @@ describe('recipe parser ita', () => {
       minQty: 100,
       maxQty: 100,
     });
+    expect(parse('100 g. tortilla ', 'ita')).to.deep.equal({
+      unit: 'grammo',
+      unitPlural: 'grammi',
+      symbol: 'g',
+      ingredient: 'tortilla',
+      quantity: 100,
+      minQty: 100,
+      maxQty: 100,
+    });
+    expect(parse('1 g. d\' acqua', 'ita')).to.deep.equal({
+      unit: 'grammo',
+      unitPlural: 'grammi',
+      symbol: 'g',
+      ingredient: 'acqua',
+      quantity: 1,
+      minQty: 1,
+      maxQty: 1,
+    });
+    expect(parse('100 g. di tortilla ', 'ita')).to.deep.equal({
+      unit: 'grammo',
+      unitPlural: 'grammi',
+      symbol: 'g',
+      ingredient: 'tortilla',
+      quantity: 100,
+      minQty: 100,
+      maxQty: 100,
+    });
     expect(parse('100 gr. tortilla ', 'ita')).to.deep.equal({
       unit: 'grammo',
       unitPlural: 'grammi',
@@ -977,6 +1004,8 @@ describe('recipe parser ita', () => {
     it('"1 grammo acqua"', () => {
       expect(parse('1 gr acqua', 'ita').unit).to.equal('grammo');
       expect(parse('2 g acqua', 'ita').unit).to.equal('grammo');
+      expect(parse('2 g. acqua', 'ita').ingredient).to.equal('acqua');
+
     });
     it('"1 chilogrammo acqua"', () => {
       expect(parse('1 kg acqua', 'ita').unit).to.equal('chilogrammo');
@@ -1055,6 +1084,12 @@ describe('recipe parser ita', () => {
     });
     it('"1 cucchiaio latte"', () => {
       expect(parse('1 cucchiaio latte', 'ita').ingredient).to.equal('latte');
+    });
+  });
+
+  describe('translates the ingredient of', () => {
+    it('"1 g di latte"', () => {
+      expect(parse('1 g di  latte', 'ita').ingredient).to.equal('latte');
     });
   });
 });
