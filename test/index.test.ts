@@ -1091,6 +1091,9 @@ describe('recipe parser ita', () => {
     it('"1 g di latte"', () => {
       expect(parse('1 g di  latte', 'ita').ingredient).to.equal('latte');
     });
+    it('"1 kg di latte"', () => {
+      expect(parse('1 kg di  latte', 'ita').ingredient).to.equal('latte');
+    });
   });
 });
 

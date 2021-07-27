@@ -81,7 +81,7 @@ export const itaUnits = {
   cucchiaio: ['cucchiai','cucchiaio'],
   cucchiaino: ['cucchiaini','cucchiaino'],
   grammo: ['g', 'g\\.', 'gr', 'gr\\.','grammi','grammo'],
-  chilogrammo: ['kg', 'kg.', 'kilogrammo', 'chilogrammi','kilogrammo','chilogrammo'],
+  chilogrammo: ['kg.', 'kg', 'kilogrammo', 'chilogrammi','kilogrammo','chilogrammo'],
   fetta: ['fetta', 'fette'],
   foglia: ['foglie','foglia'],
   litro: [ 'l\\.','l', 'lt','litro'],
