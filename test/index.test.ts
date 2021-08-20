@@ -377,6 +377,8 @@ describe('recipe parser ita', () => {
   describe('translates the unit', () => {
     it('of "qb  di acqua"', () => {
       expect(parse('qb di acqua', 'ita').unit).to.equal('q.b.');
+      expect(parse('qb di acqua', 'ita').quantity).to.equal(0);
+
     });
     it('of "quanto basta  acqua"', () => {
       expect(parse('quanto basta di acqua', 'ita').unit).to.equal('q.b.');
@@ -924,6 +926,15 @@ describe('recipe parser ita', () => {
       minQty: 100,
       maxQty: 100,
     });
+    expect(parse('q.b. di sale', 'ita')).to.deep.equal({
+      unit: 'q.b.',
+      unitPlural: null,
+      symbol: null,
+      ingredient: 'sale',
+      quantity: 0,
+      minQty: 0,
+      maxQty: 0,
+    });
     expect(parse('100 gr. tortilla ', 'ita')).to.deep.equal({
       unit: 'grammo',
       unitPlural: 'grammi',
@@ -1093,6 +1104,15 @@ describe('recipe parser ita', () => {
     });
     it('"1 kg di latte"', () => {
       expect(parse('1 kg di  latte', 'ita').ingredient).to.equal('latte');
+    });
+    it('"250 kg di farina"', () => {
+      expect(parse('250 kg di farina', 'ita').ingredient).to.equal('farina');
+    });
+    it('"dieci kg  farina"', () => {
+      expect(parse('dieci kg farina', 'ita').ingredient).to.equal('farina');
+    });
+    it('"dieci kg farina"', () => {
+      expect(parse('dieci kg farina', 'ita').ingredient).to.equal('farina');
     });
   });
 });
