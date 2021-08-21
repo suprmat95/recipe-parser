@@ -47,11 +47,11 @@ function getUnit(input: string, language: string) {
   const [toTaste, match, extFlag] = toTasteRecognize(input, language)
   if(toTaste) {
     if (extFlag){
-      response = [toTaste, '', match];
+      response = [toTaste, toTaste, match];
     }
     else
     {
-      response = [toTaste, '', match];
+      response = [toTaste, toTaste, match];
     }
   }
   else

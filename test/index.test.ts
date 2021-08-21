@@ -814,7 +814,7 @@ describe('recipe parser ita', () => {
       it('"quanto basta  di latte"', () => {
         expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
           unit: "q.b.",
-          unitPlural: null,
+          unitPlural: "q.b.",
           quantity: 0,
           symbol: null,
           ingredient: 'latte',
@@ -825,7 +825,7 @@ describe('recipe parser ita', () => {
       it('"Quanto Basta  di latte"', () => {
         expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
           unit: "q.b.",
-          unitPlural: null,
+          unitPlural: "q.b.",
           quantity: 0,
           symbol: null,
           ingredient: 'latte',
@@ -836,7 +836,7 @@ describe('recipe parser ita', () => {
       it('"qb  di latte"', () => {
         expect(parse('quanto basta  di latte', 'ita')).to.deep.equal({
           unit: "q.b.",
-          unitPlural: null,
+          unitPlural: "q.b.",
           quantity: 0,
           symbol: null,
           ingredient: 'latte',
@@ -847,7 +847,7 @@ describe('recipe parser ita', () => {
       it('"q.b. di latte"', () => {
         expect(parse('q.b.  di latte', 'ita')).to.deep.equal({
           unit: "q.b.",
-          unitPlural: null,
+          unitPlural: "q.b.",
           quantity: 0,
           symbol: null,
           ingredient: 'latte',
@@ -858,7 +858,7 @@ describe('recipe parser ita', () => {
       it('"q.b. latte"', () => {
         expect(parse('q.b.  latte', 'ita')).to.deep.equal({
           unit: "q.b.",
-          unitPlural: null,
+          unitPlural: "q.b.",
           quantity: 0,
           symbol: null,
           ingredient: 'latte',
@@ -928,7 +928,7 @@ describe('recipe parser ita', () => {
     });
     expect(parse('q.b. di sale', 'ita')).to.deep.equal({
       unit: 'q.b.',
-      unitPlural: null,
+      unitPlural: "q.b.",
       symbol: null,
       ingredient: 'sale',
       quantity: 0,
@@ -955,7 +955,7 @@ describe('recipe parser ita', () => {
     });
     expect(parse('basilico quanto basta', 'ita')).to.deep.equal({
       unit: 'q.b.',
-      unitPlural: null,
+      unitPlural: "q.b.",
       symbol: null,
       ingredient: 'basilico',
       quantity: 0,
@@ -964,7 +964,7 @@ describe('recipe parser ita', () => {
     });
     expect(parse('basilico q.b.', 'ita')).to.deep.equal({
       unit: 'q.b.',
-      unitPlural: null,
+      unitPlural: "q.b.",
       symbol: null,
       ingredient: 'basilico',
       quantity: 0,
@@ -973,7 +973,7 @@ describe('recipe parser ita', () => {
     });
     expect(parse('basilico QB', 'ita')).to.deep.equal({
       unit: 'q.b.',
-      unitPlural: null,
+      unitPlural: "q.b.",
       symbol: null,
       ingredient: 'basilico',
       quantity: 0,
