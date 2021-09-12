@@ -103,7 +103,7 @@ export const itaUnits = {
   manciata: ['manciata'],
   rotolo: ['rotolo'],
   bicchierino: ['bicchierino'],
-  noce: ['noce'],
+  //noce: ['noce'],
 } as { [key: string]: string[] };
 
 export const itaPluralUnits = {
@@ -134,7 +134,7 @@ export const itaPluralUnits = {
   manciata: 'manciate',
   rotolo: 'rotoli',
   bicchierino: 'bicchierini',
-  noce: 'noci'
+  //noce: 'noci'
 } as { [key: string]: string };
 
 export const itaNameToSymbol = {
