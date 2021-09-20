@@ -1001,7 +1001,35 @@ describe('recipe parser ita', () => {
       maxQty: 0,
     });
   });
-
+  it('test noci', () => {
+    expect(parse('quattro noci', 'ita')).to.deep.equal({
+      unit: null,
+      unitPlural: null,
+      symbol: null,
+      ingredient: 'noci',
+      quantity: 4,
+      minQty: 4,
+      maxQty: 4,
+    });
+    expect(parse('una noce', 'ita')).to.deep.equal({
+      unit: null,
+      unitPlural: null,
+      symbol: null,
+      ingredient: 'noce',
+      quantity: 1,
+      minQty: 1,
+      maxQty: 1,
+    });
+    expect(parse('100 gr di noci', 'ita')).to.deep.equal({
+      unit: 'grammo',
+      unitPlural: 'grammi',
+      symbol: 'g',
+      ingredient: 'noci',
+      quantity: 100,
+      minQty: 100,
+      maxQty: 100,
+    });
+  });
   describe('translates the abbreviated units of', () => {
     it('"1 tazza acqua"', () => {
       expect(parse('1 tazza acqua', 'ita').unit).to.equal('tazza');
