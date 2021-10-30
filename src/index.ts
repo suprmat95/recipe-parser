@@ -122,7 +122,6 @@ export function parse(recipeString: string, language: string) {
   ) as string[];
   quantity = convert.convertFromFraction(quantity);
 
-  console.log({quantity});
   /* extraInfo will be any info in parantheses. We'll place it at the end of the ingredient.
   For example: "sugar (or other sweetener)" --> extraInfo: "(or other sweetener)" */
   let extraInfo;
@@ -135,8 +134,6 @@ export function parse(recipeString: string, language: string) {
     restOfIngredient,
     language,
   ) as string[];
-
-  console.log({unit, symbol, originalUnit});
 
   // remove unit from the ingredient if one was found and trim leading and trailing whitespace
   let ingredient = !!originalUnit

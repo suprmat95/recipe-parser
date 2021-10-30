@@ -113,7 +113,6 @@ export function findQuantityAndConvertIfUnicode(
 
   // found a quantity range, for ex: "2 to 3"
   if (ingredientLine.match(numericRangeWithSpaceRegex)) {
-    console.log('HERE!');
     const quantity = getFirstMatch(ingredientLine, numericRangeWithSpaceRegex)
       .replace('to', '-')
       .split(' ')
