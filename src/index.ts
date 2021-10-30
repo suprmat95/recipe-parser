@@ -72,14 +72,7 @@ function getUnit(input: string, language: string) {
           'gi',
         );
         const match = input.match(regex);
-        console.log(
-          'match!',
-          unit,
-          input,
-          '(\\b' + shorthand.replace(/\./g, '\\.') + '\\b)',
-        );
         if (match) {
-          console.log('match!', unit);
           return res([unit, pluralUnits[unit], match[0]]);
         }
       }
