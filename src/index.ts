@@ -30,7 +30,7 @@ export function toTasteRecognize(
       ];
     }
     const regExString = firstLetter.join('[.]?') + '[.]?';
-    regEx = new RegExp(regExString, 'gi');
+    regEx = new RegExp('(\\b' + regExString + '\\b)', 'gi');
     // const a = input.toString().split(/[\s-]+/);
     if (input.match(regEx)) {
       return [

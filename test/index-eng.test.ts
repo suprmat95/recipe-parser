@@ -62,6 +62,13 @@ describe('recipe parser eng', () => {
       });
     });
 
+    describe('to taste detector', () => {
+      it('does not detect words containing the same characters', () => {
+        expect(parse('100g of butter', 'eng').unit).to.equal('gram');
+        expect(parse('100g of butter', 'eng').ingredient).to.equal('butter');
+      });
+    });
+
     describe('translates the quantity range', () => {
       const expectation = {
         ingredient: 'water',
