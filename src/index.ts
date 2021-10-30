@@ -56,33 +56,31 @@ function getUnit(input: string, language: string) {
   };
 
   if (toTaste) {
-    if (extFlag) {
-      return res([toTaste, toTaste, match]);
-    } else {
-      return res([toTaste, toTaste, match]);
-    }
-  } else {
-    if (units[input] || pluralUnits[input]) {
-      return res([input, pluralUnits[input], input]);
-    }
-    for (const unit of Object.keys(units)) {
-      for (const shorthand of units[unit]) {
-        const regex = new RegExp(
-          '(\\b' + shorthand.replace(/\./g, '\\.') + '\\b)',
-          'gi',
-        );
-        const match = input.match(regex);
-        if (match) {
-          return res([unit, pluralUnits[unit], match[0]]);
-        }
-      }
-    }
-    for (const pluralUnit of Object.keys(pluralUnits)) {
-      const regex = new RegExp('(\\b' + pluralUnits[pluralUnit] + '\\b)', 'gi');
+    return res([toTaste, toTaste, match]);
+  }
+
+  if (units[input] || pluralUnits[input]) {
+    return res([input, pluralUnits[input], input]);
+  }
+
+  for (const unit of Object.keys(units)) {
+    for (const shorthand of units[unit]) {
+      const regex = new RegExp(
+        '(\\b' + shorthand.replace(/\./g, '\\.') + '\\b)',
+        'gi',
+      );
       const match = input.match(regex);
       if (match) {
-        return res([pluralUnit, pluralUnits[pluralUnit], match[0]]);
+        return res([unit, pluralUnits[unit], match[0]]);
       }
+    }
+  }
+
+  for (const pluralUnit of Object.keys(pluralUnits)) {
+    const regex = new RegExp('(\\b' + pluralUnits[pluralUnit] + '\\b)', 'gi');
+    const match = input.match(regex);
+    if (match) {
+      return res([pluralUnit, pluralUnits[pluralUnit], match[0]]);
     }
   }
 
