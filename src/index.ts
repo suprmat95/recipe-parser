@@ -12,11 +12,12 @@ export interface Ingredient {
   maxQty: number | null;
 }
 
-export function toTasteRecognize(input: string, language: string) {
+export function toTasteRecognize(
+  input: string,
+  language: string,
+): [string, string, boolean] {
   const toTaste = toTasteMap[language];
   const firstLetter = toTaste.match(/\b(\w)/g);
-  // componing first two word
-  // const word = firstWord.concat(' ').concat(secondWord)
 
   if (firstLetter) {
     // checking the extended version
@@ -26,7 +27,7 @@ export function toTasteRecognize(input: string, language: string) {
         (firstLetter.join('.') + '.').toLocaleLowerCase(),
         convert.getFirstMatch(input, regEx),
         true,
-      ] as [string, string, boolean];
+      ];
     }
     const regExString = firstLetter.join('[.]?') + '[.]?';
     regEx = new RegExp(regExString, 'gi');
@@ -36,18 +37,18 @@ export function toTasteRecognize(input: string, language: string) {
         (firstLetter.join('.') + '.').toLocaleLowerCase(),
         convert.getFirstMatch(input, regEx),
         false,
-      ] as [string, string, boolean];
+      ];
     }
   }
-  return ['', '', false] as [string, string, boolean];
+  return ['', '', false];
 }
 
-function getUnit(input: string, language: string) {
+function getUnit(input: string, language: string): string[] {
   const unit = unitsMap.get(language);
   const units = unit[0];
   const pluralUnits = unit[1];
   const symbolUnits = unit[3];
-  const [toTaste, match, _extFlag] = toTasteRecognize(input, language);
+  const [toTaste, toTasteMatch, _extFlag] = toTasteRecognize(input, language);
 
   const res = (response: string[]) => {
     const symbol = symbolUnits[response[0]];
@@ -56,7 +57,7 @@ function getUnit(input: string, language: string) {
   };
 
   if (toTaste) {
-    return res([toTaste, toTaste, match]);
+    return res([toTaste, toTaste, toTasteMatch]);
   }
 
   if (units[input] || pluralUnits[input]) {
@@ -160,7 +161,7 @@ export function parse(recipeString: string, language: string) {
   };
 }
 
-export function combine(ingredientArray: Ingredient[]) {
+export function combine(ingredientArray: Ingredient[]): Ingredient[] {
   const combinedIngredients = ingredientArray.reduce((acc, ingredient) => {
     const key = ingredient.ingredient + ingredient.unit; // when combining different units, remove this from the key and just use the name
     const existingIngredient = acc[key];
@@ -182,7 +183,10 @@ export function combine(ingredientArray: Ingredient[]) {
     .sort(compareIngredients);
 }
 
-export function prettyPrintingPress(ingredient: Ingredient, language: string) {
+export function prettyPrintingPress(
+  ingredient: Ingredient,
+  language: string,
+): string {
   let quantityString = '';
   let unit = ingredient.unit;
   if (ingredient.quantity) {
