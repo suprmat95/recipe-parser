@@ -62,17 +62,30 @@ describe('recipe parser eng', () => {
       });
     });
 
-    //    describe('translates the quantity range', () => {
-    //      it('of "10-20 teaspoon water"', () => {
-    //        expect(parse('10-20 teaspoon water', 'eng').quantity).to.equal('10-20');
-    //      });
-    //      it('of "10 - 20 teaspoon water"', () => {
-    //        expect(parse('10 - 20 teaspoon water', 'eng').quantity).to.equal('10-20');
-    //      });
-    //      it('of "10 to 20 teaspoon water"', () => {
-    //        expect(parse('10 to 20 teaspoon water', 'eng').quantity).to.equal('10-20');
-    //      });
-    //    });
+    describe('translates the quantity range', () => {
+      const expectation = {
+        ingredient: 'water',
+        maxQty: 20,
+        minQty: 10,
+        quantity: 10,
+        symbol: 'tsp',
+        unit: 'teaspoon',
+        unitPlural: 'teaspoons',
+      };
+      it('of "10-20 teaspoon water"', () => {
+        expect(parse('10-20 teaspoon water', 'eng')).to.deep.equal(expectation);
+      });
+      it('of "10 - 20 teaspoon water"', () => {
+        expect(parse('10 - 20 teaspoon water', 'eng')).to.deep.equal(
+          expectation,
+        );
+      });
+      it('of "10 to 20 teaspoon water"', () => {
+        expect(parse('10 to 20 teaspoon water', 'eng')).to.deep.equal(
+          expectation,
+        );
+      });
+    });
 
     describe('of unicode fractions', () => {
       const unicodeAmounts = [
