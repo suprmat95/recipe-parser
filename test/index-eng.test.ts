@@ -377,8 +377,6 @@ describe('recipe parser eng', () => {
       expect(parse('1 quarts water', 'eng').unit).to.equal('quart');
     });
     it('"1 tablespoon water"', () => {
-      expect(parse('1 T water', 'eng').unit).to.equal('tablespoon');
-      expect(parse('1 T. water', 'eng').unit).to.equal('tablespoon');
       expect(parse('1 tbs water', 'eng').unit).to.equal('tablespoon');
       expect(parse('1 tbsp water', 'eng').unit).to.equal('tablespoon');
       expect(parse('1 tbspn water', 'eng').unit).to.equal('tablespoon');
