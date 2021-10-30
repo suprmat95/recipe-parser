@@ -47,7 +47,7 @@ function getUnit(input: string, language: string) {
   const units = unit[0];
   const pluralUnits = unit[1];
   const symbolUnits = unit[3];
-  const [toTaste, match, extFlag] = toTasteRecognize(input, language);
+  const [toTaste, match, _extFlag] = toTasteRecognize(input, language);
 
   const res = (response: string[]) => {
     const symbol = symbolUnits[response[0]];
