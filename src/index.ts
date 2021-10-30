@@ -1,98 +1,113 @@
 import * as convert from './convert';
-import { unitsMap} from './units';
-import { repeatingFractions } from './repeatingFractions';
+import {unitsMap} from './units';
+import {repeatingFractions} from './repeatingFractions';
 import {toTasteMap} from './numbers';
-
-//import * as Natural from 'natural';
-
-//const nounInflector = new Natural.NounInflector();
 
 export interface Ingredient {
   ingredient: string;
-  quantity: string | null;
+  quantity: number | null;
   unit: string | null;
-  minQty: string | null;
-  maxQty: string | null;
+  symbol: string | null;
+  minQty: number | null;
+  maxQty: number | null;
 }
 
-export function toTasteRecognize(input: string, language: string){
-  const toTaste = toTasteMap[language]
+export function toTasteRecognize(input: string, language: string) {
+  const toTaste = toTasteMap[language];
   const firstLetter = toTaste.match(/\b(\w)/g);
-  //componing first two word
-  //const word = firstWord.concat(' ').concat(secondWord)
-  
-  if(firstLetter){
-    //checking the extended version
-    let regEx = new RegExp(toTaste, 'gi')
-    if(input.match(regEx)){
-      return [(firstLetter.join('.') +'.').toLocaleLowerCase(), convert.getFirstMatch(input, regEx), true]  as [string, string, boolean]
+  // componing first two word
+  // const word = firstWord.concat(' ').concat(secondWord)
+
+  if (firstLetter) {
+    // checking the extended version
+    let regEx = new RegExp(toTaste, 'gi');
+    if (input.match(regEx)) {
+      return [
+        (firstLetter.join('.') + '.').toLocaleLowerCase(),
+        convert.getFirstMatch(input, regEx),
+        true,
+      ] as [string, string, boolean];
     }
-    const regExString = firstLetter.join('[.]?') +'[.]?'
-    regEx = new RegExp(regExString, 'gi')
-    //const a = input.toString().split(/[\s-]+/);
-    if(input.match(regEx)){
-      return [(firstLetter.join('.') +'.').toLocaleLowerCase(), convert.getFirstMatch(input, regEx), false] as [string, string, boolean]
+    const regExString = firstLetter.join('[.]?') + '[.]?';
+    regEx = new RegExp(regExString, 'gi');
+    // const a = input.toString().split(/[\s-]+/);
+    if (input.match(regEx)) {
+      return [
+        (firstLetter.join('.') + '.').toLocaleLowerCase(),
+        convert.getFirstMatch(input, regEx),
+        false,
+      ] as [string, string, boolean];
     }
   }
-  return ['', '', false]  as [string, string, boolean]
+  return ['', '', false] as [string, string, boolean];
 }
 
 function getUnit(input: string, language: string) {
- // const word = input.concat(' ').concat(secondWord)
-  let unit = unitsMap.get(language)
-  let units = unit[0];
-  let pluralUnits = unit[1];
-  let symbolUnits = unit[3]
-  let response = [] as string[];
-  const [toTaste, match, extFlag] = toTasteRecognize(input, language)
-  if(toTaste) {
-    if (extFlag){
-      response = [toTaste, toTaste, match];
-    }
-    else
-    {
-      response = [toTaste, toTaste, match];
-    }
-  }
-  else
-  {
-    if (units[input] || pluralUnits[input]) {
+  const unit = unitsMap.get(language);
+  const units = unit[0];
+  const pluralUnits = unit[1];
+  const symbolUnits = unit[3];
+  const [toTaste, match, extFlag] = toTasteRecognize(input, language);
 
-      response =  [input, pluralUnits[input], input ];
+  const res = (response: string[]) => {
+    const symbol = symbolUnits[response[0]];
+    response.splice(2, 0, symbol);
+    return response;
+  };
+
+  if (toTaste) {
+    if (extFlag) {
+      return res([toTaste, toTaste, match]);
+    } else {
+      return res([toTaste, toTaste, match]);
+    }
+  } else {
+    if (units[input] || pluralUnits[input]) {
+      return res([input, pluralUnits[input], input]);
     }
     for (const unit of Object.keys(units)) {
       for (const shorthand of units[unit]) {
-        const regex = new RegExp('(?=\\b'+shorthand+'\\b)', 'gi')
-        if (input.match(regex)) {
-          response = [unit, pluralUnits[unit], shorthand];
+        const regex = new RegExp(
+          '(\\b' + shorthand.replace(/\./g, '\\.') + '\\b)',
+          'gi',
+        );
+        const match = input.match(regex);
+        console.log(
+          'match!',
+          unit,
+          input,
+          '(\\b' + shorthand.replace(/\./g, '\\.') + '\\b)',
+        );
+        if (match) {
+          console.log('match!', unit);
+          return res([unit, pluralUnits[unit], match[0]]);
         }
       }
     }
     for (const pluralUnit of Object.keys(pluralUnits)) {
-      const regex = new RegExp('(?=\\b'+pluralUnits[pluralUnit]+'\\b)', 'gi')
-      if (input.match(regex)) {
-        response = [pluralUnit, pluralUnits[pluralUnit], pluralUnits[pluralUnit]];
+      const regex = new RegExp('(\\b' + pluralUnits[pluralUnit] + '\\b)', 'gi');
+      const match = input.match(regex);
+      if (match) {
+        return res([pluralUnit, pluralUnits[pluralUnit], match[0]]);
       }
-    }  
+    }
   }
-  let symbol = symbolUnits[response[0]]
-  response.splice(2, 0, symbol)
-  
-  return response
+
+  return [];
 }
 
 /* return the proposition if it's used before of the name of
 the ingredient */
 function getPreposition(input: string, language: string) {
-  let prepositionMap = unitsMap.get(language)
-  let prepositions = prepositionMap[2];
+  const prepositionMap = unitsMap.get(language);
+  const prepositions = prepositionMap[2];
   for (const preposition of prepositions) {
-      let regex = new RegExp('^' + preposition )
-      if (convert.getFirstMatch(input, regex)) 
-        return preposition;
-      
+    const regex = new RegExp('^' + preposition);
+    if (convert.getFirstMatch(input, regex)) {
+      return preposition;
+    }
   }
- 
+
   return null;
 }
 
@@ -101,9 +116,13 @@ export function parse(recipeString: string, language: string) {
 
   /* restOfIngredient represents rest of ingredient line.
   For example: "1 pinch salt" --> quantity: 1, restOfIngredient: pinch salt */
-  let [quantity, restOfIngredient] = convert.findQuantityAndConvertIfUnicode(ingredientLine, language) as string[];
+  let [quantity, restOfIngredient] = convert.findQuantityAndConvertIfUnicode(
+    ingredientLine,
+    language,
+  ) as string[];
   quantity = convert.convertFromFraction(quantity);
 
+  console.log({quantity});
   /* extraInfo will be any info in parantheses. We'll place it at the end of the ingredient.
   For example: "sugar (or other sweetener)" --> extraInfo: "(or other sweetener)" */
   let extraInfo;
@@ -112,24 +131,32 @@ export function parse(recipeString: string, language: string) {
     restOfIngredient = restOfIngredient.replace(extraInfo, '').trim();
   }
   // grab unit and turn it into non-plural version, for ex: "Tablespoons" OR "Tsbp." --> "tablespoon"
-  const [unit, unitPlural, symbol, originalUnit] = getUnit(restOfIngredient, language) as string[]
-  // remove unit from the ingredient if one was found and trim leading and trailing whitespace
-  
-  let ingredient = !!originalUnit ? restOfIngredient.replace(originalUnit, '').trim() : restOfIngredient.replace(unit, '').trim();
-  ingredient=ingredient.split('.').join("").trim()
-  let preposition = getPreposition(ingredient.split(' ')[0], language)
+  const [unit, unitPlural, symbol, originalUnit] = getUnit(
+    restOfIngredient,
+    language,
+  ) as string[];
 
-  if(preposition) {
-    let regex = new RegExp('^' + preposition)
-    ingredient = ingredient.replace(regex,'').trim()
+  console.log({unit, symbol, originalUnit});
+
+  // remove unit from the ingredient if one was found and trim leading and trailing whitespace
+  let ingredient = !!originalUnit
+    ? restOfIngredient.replace(originalUnit, '').trim()
+    : restOfIngredient.replace(unit, '').trim();
+  ingredient = ingredient.split('.').join('').trim();
+  const preposition = getPreposition(ingredient.split(' ')[0], language);
+
+  if (preposition) {
+    const regex = new RegExp('^' + preposition);
+    ingredient = ingredient.replace(regex, '').trim();
   }
-  
+
   let minQty = quantity; // default to quantity
   let maxQty = quantity; // default to quantity
 
   // if quantity is non-nil and is a range, for ex: "1-2", we want to get minQty and maxQty
   if (quantity && quantity.includes('-')) {
     [minQty, maxQty] = quantity.split('-');
+    quantity = minQty;
   }
 
   return {
@@ -137,7 +164,9 @@ export function parse(recipeString: string, language: string) {
     unit: !!unit ? unit : null,
     unitPlural: !!unitPlural ? unitPlural : null,
     symbol: !!symbol ? symbol : null,
-    ingredient: extraInfo ? `${ingredient} ${extraInfo}` : ingredient.replace(/( )*\.( )*/g,''),
+    ingredient: extraInfo
+      ? `${ingredient} ${extraInfo}`
+      : ingredient.replace(/( )*\.( )*/g, ''),
     minQty: +minQty,
     maxQty: +maxQty,
   };
@@ -149,27 +178,35 @@ export function combine(ingredientArray: Ingredient[]) {
     const existingIngredient = acc[key];
 
     if (existingIngredient) {
-      return Object.assign(acc, { [key]: combineTwoIngredients(existingIngredient, ingredient) });
+      return Object.assign(acc, {
+        [key]: combineTwoIngredients(existingIngredient, ingredient),
+      });
     } else {
-      return Object.assign(acc, { [key]: ingredient });
+      return Object.assign(acc, {[key]: ingredient});
     }
-  }, {} as { [key: string]: Ingredient });
+  }, {} as {[key: string]: Ingredient});
 
-  return Object.keys(combinedIngredients).reduce((acc, key) => {
-    const ingredient = combinedIngredients[key];
-    return acc.concat(ingredient);
-  }, [] as Ingredient[]).sort(compareIngredients);
+  return Object.keys(combinedIngredients)
+    .reduce((acc, key) => {
+      const ingredient = combinedIngredients[key];
+      return acc.concat(ingredient);
+    }, [] as Ingredient[])
+    .sort(compareIngredients);
 }
 
-export function prettyPrintingPress(ingredient: Ingredient) {
-  let quantity = '';
+export function prettyPrintingPress(ingredient: Ingredient, language: string) {
+  let quantityString = '';
   let unit = ingredient.unit;
   if (ingredient.quantity) {
-    const [whole, remainder] = ingredient.quantity.split('.');
+    const whole = Math.floor(ingredient.quantity);
+    const remainder =
+      ingredient.quantity % 1
+        ? `${(ingredient.quantity % 1).toPrecision(3)}`.split('.')[1]
+        : undefined;
     if (+whole !== 0 && typeof whole !== 'undefined') {
-      quantity = whole;
+      quantityString = `${whole}`;
     }
-    if (+remainder !== 0 && typeof remainder !== 'undefined') {
+    if (remainder && typeof remainder !== 'undefined') {
       let fractional;
       if (repeatingFractions[remainder]) {
         fractional = repeatingFractions[remainder];
@@ -186,16 +223,20 @@ export function prettyPrintingPress(ingredient: Ingredient) {
         fractional = Math.floor(numerator) + '/' + Math.floor(denominator);
       }
 
-      quantity += quantity ? ' ' + fractional : fractional;
+      quantityString += quantityString ? ' ' + fractional : fractional;
     }
-   /* if (((+whole !== 0 && typeof remainder !== 'undefined') || +whole > 1) && unit) {
-      unit = nounInflector.pluralize(unit);
-    }*/
+    if (
+      ((+whole !== 0 && typeof remainder !== 'undefined') || +whole > 1) &&
+      unit
+    ) {
+      const pluralUnits = unitsMap.get(language)[1];
+      unit = pluralUnits[unit];
+    }
   } else {
     return ingredient.ingredient;
   }
 
-  return `${quantity}${unit ? ' ' + unit : ''} ${ingredient.ingredient}`;
+  return `${quantityString}${unit ? ' ' + unit : ''} ${ingredient.ingredient}`;
 }
 
 function gcd(a: number, b: number): number {
@@ -207,11 +248,23 @@ function gcd(a: number, b: number): number {
 }
 
 // TODO: Maybe change this to existingIngredients: Ingredient | Ingredient[]
-function combineTwoIngredients(existingIngredients: Ingredient, ingredient: Ingredient): Ingredient {
-  const quantity = existingIngredients.quantity && ingredient.quantity ? (Number(existingIngredients.quantity) + Number(ingredient.quantity)).toString() : null;
-  const minQty = existingIngredients.minQty && ingredient.minQty ? (Number(existingIngredients.minQty) + Number(ingredient.minQty)).toString() : null;
-  const maxQty = existingIngredients.maxQty && ingredient.maxQty ? (Number(existingIngredients.maxQty) + Number(ingredient.maxQty)).toString() : null;
-  return Object.assign({}, existingIngredients, { quantity, minQty, maxQty });
+function combineTwoIngredients(
+  existingIngredients: Ingredient,
+  ingredient: Ingredient,
+): Ingredient {
+  const quantity =
+    existingIngredients.quantity !== null && ingredient.quantity !== null
+      ? Number(existingIngredients.quantity) + Number(ingredient.quantity)
+      : null;
+  const minQty =
+    existingIngredients.minQty !== null && ingredient.minQty !== null
+      ? Number(existingIngredients.minQty) + Number(ingredient.minQty)
+      : null;
+  const maxQty =
+    existingIngredients.maxQty !== null && ingredient.maxQty !== null
+      ? Number(existingIngredients.maxQty) + Number(ingredient.maxQty)
+      : null;
+  return Object.assign({}, existingIngredients, {quantity, minQty, maxQty});
 }
 
 function compareIngredients(a: Ingredient, b: Ingredient) {
