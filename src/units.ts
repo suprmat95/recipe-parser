@@ -90,6 +90,7 @@ export const itaUnits = {
   fogliolina: ['fogliolina','foglioline'],
   foglia: ['foglie','foglia'],
   foglio: ['fogli','foglio'],
+  gambo: ['gambo', 'gambi'],
   litro: [ 'l\\.','l', 'lt','litro'],
   mazzo: ['mazzo','mazzi'],
   mazzetto: ['Mazzetto','mazzetti','mazzetto'],
@@ -121,6 +122,7 @@ export const itaPluralUnits = {
   bicchiere: 'bicchieri',
   bustina: 'bustine',
   bottiglia: 'bottiglie',
+  gambo: 'gambi',
   tazza: 'tazze',
   quarto: 'quarti',
   cucchiaio: 'cucchiai',
@@ -160,6 +162,7 @@ export const itaPluralUnits = {
 export const itaNameToSymbol = {
   bicchiere: '',
   bustina: '',
+  gambo: '',
   tazza: '',
   quarto: '',
   cucchiaio: '',
