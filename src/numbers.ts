@@ -86,11 +86,12 @@ export const engSmall: { [key: string]: number } = {
   
   export const itaMagnitude: { [key: string]: number } = {
     'cento': 100,
-    'mille':     1000,
-    'mila':     1000,
-    'millione':      1000000,
-    'milliardo':      1000000000,
-    'trilliardo':     1000000000000,
+    'etto': 100,
+    'mille': 1000,
+    'mila': 1000,
+    'millione': 1000000,
+    'milliardo': 1000000000,
+    'trilliardo': 1000000000000,
   };
   export const toTasteMap: {[key:string]: string } = {
     'eng': 'to taste',
