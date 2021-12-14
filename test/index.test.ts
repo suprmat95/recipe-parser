@@ -1106,6 +1106,9 @@ describe('recipe parser ita', () => {
     it('"1 pizzico acqua"', () => {
       expect(parse('2 pizzichi sale', 'ita').unit).to.equal('pizzico');
     });
+    it('"1 cubetto di ghiaccio"', () => {
+      expect(parse('2 cubetto di ghiaccio', 'ita').unit).to.equal('cubetto');
+    });
   });
 
   describe('translates the ingredient of', () => {

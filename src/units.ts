@@ -80,6 +80,7 @@ export const itaUnits = {
   bicchiere: ['bicchiere'],
   bottiglia: ['bottiglie','bottiglia'],
   bustina: ['bustina', 'bustine'],
+  cubetto: ['cubetto', 'cubetti'],
   cucchiaio: ['cucchiai','cucchiaio'],
   cucchiaino: ['cucchiaini','cucchiaino'],
   confezione: ['confezioni','confezione'],
@@ -114,6 +115,7 @@ export const itaUnits = {
   rotolo: ['rotolo'],
   pugno: ['pugno', 'pugni'],
   bicchierino: ['bicchierino'],
+
   //noce: ['noce'],
 } as { [key: string]: string[] };
 
@@ -122,6 +124,7 @@ export const itaPluralUnits = {
   bicchiere: 'bicchieri',
   bustina: 'bustine',
   bottiglia: 'bottiglie',
+  cubetto: 'cubetti',
   gambo: 'gambi',
   tazza: 'tazze',
   quarto: 'quarti',
@@ -162,6 +165,7 @@ export const itaPluralUnits = {
 export const itaNameToSymbol = {
   bicchiere: '',
   bustina: '',
+  cubetto: '',
   gambo: '',
   tazza: '',
   quarto: '',
