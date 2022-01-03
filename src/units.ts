@@ -179,6 +179,7 @@ export const itaNameToSymbol = {
   panetto: '',
   foglia: '',
   mazzetto: '',
+  manciata: '',
   vasetto: '',
   grammo: 'g',
   cucchiaino: 'cc',
