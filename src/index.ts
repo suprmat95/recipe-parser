@@ -112,7 +112,7 @@ export function parse(recipeString: string, language: string) {
     restOfIngredient = restOfIngredient.replace(extraInfo, '').trim();
   }
   // grab unit and turn it into non-plural version, for ex: "Tablespoons" OR "Tsbp." --> "tablespoon"
-  const [unit, unitPlural, symbol, originalUnit] = getUnit(restOfIngredient, language) as string[]
+  let [unit, unitPlural, symbol, originalUnit] = getUnit(restOfIngredient, language) as string[]
   // remove unit from the ingredient if one was found and trim leading and trailing whitespace
   
   let ingredient = !!originalUnit ? restOfIngredient.replace(originalUnit, '').trim() : restOfIngredient.replace(unit, '').trim();
@@ -131,7 +131,10 @@ export function parse(recipeString: string, language: string) {
   if (quantity && quantity.includes('-')) {
     [minQty, maxQty] = quantity.split('-');
   }
-
+  if ((!quantity || quantity == '0') && !unit){
+      unit ='q.b.'
+      unitPlural='q.b.'
+  }
   return {
     quantity: +quantity,
     unit: !!unit ? unit : null,
