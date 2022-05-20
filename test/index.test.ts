@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { parse } from '../src/index';
+import { parse, multiLineParse } from '../src/index';
 /*
 describe('recipe parser eng', () => {
   it('returns an object', () => {
@@ -369,11 +369,34 @@ describe('recipe parser eng', () => {
 });
 */
 /////ITALIAN TEST
+describe('split on separator', () => {
+  it('"quattro noci - quattro noci"', () => {
+    expect(multiLineParse('quattro noci - quattro noci', 'ita')[0]).to.deep.equal({
+    unit: null,
+    unitPlural: null,
+    symbol: null,
+    ingredient: 'noci',
+    quantity: 4,
+    minQty: 4,
+    maxQty: 4,
+  });
+}),
+it('"tre noci - 8 noci"', () => {
+  expect(multiLineParse('tre noci / quattro noci', 'ita')[0]).to.deep.equal({
+  unit: null,
+  unitPlural: null,
+  symbol: null,
+  ingredient: 'noci',
+  quantity: 3,
+  minQty: 3,
+  maxQty: 3,
+});
+});
+});
 describe('recipe parser ita', () => {
   it('returns an object', () => {
     expect(typeof parse('1 tazza acqua', 'ita')).to.equal('object');
   });
-
   describe('translates the unit', () => {
     it('of "qb  di acqua"', () => {
       expect(parse('qb di acqua', 'ita').unit).to.equal('q.b.');

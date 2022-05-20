@@ -146,6 +146,15 @@ export function parse(recipeString: string, language: string) {
   };
 }
 
+export function multiLineParse(recipeString: string, language: string) {
+  const ingredients = recipeString.split(/\r?\n?-?\//);
+  let result = []
+  for (var ingredient of ingredients) {
+    result.push(parse(ingredient, language))
+  }
+  return result;
+}
+
 export function combine(ingredientArray: Ingredient[]) {
   const combinedIngredients = ingredientArray.reduce((acc, ingredient) => {
     const key = ingredient.ingredient + ingredient.unit; // when combining different units, remove this from the key and just use the name
