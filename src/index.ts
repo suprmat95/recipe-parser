@@ -97,8 +97,7 @@ function getPreposition(input: string, language: string) {
 }
 
 export function parse(recipeString: string, language: string) {
-  const ingredientLine = recipeString.trim(); // removes leading and trailing whitespace
-
+  let ingredientLine = recipeString.trim().replace(/^(-)/,""); // removes leading and trailing whitespace
   /* restOfIngredient represents rest of ingredient line.
   For example: "1 pinch salt" --> quantity: 1, restOfIngredient: pinch salt */
   let [quantity, restOfIngredient] = convert.findQuantityAndConvertIfUnicode(ingredientLine, language) as string[];
@@ -147,10 +146,14 @@ export function parse(recipeString: string, language: string) {
 }
 
 export function multiLineParse(recipeString: string, language: string) {
-  const ingredients = recipeString.split(/\r?\n?-?\//);
+  const ingredients = recipeString.split(/[👉🏻👉\r\n-]/);
   let result = []
+  let i;
   for (var ingredient of ingredients) {
-    result.push(parse(ingredient, language))
+    i = parse(ingredient, language)
+    if (i['ingredient']){
+      result.push(i)
+    }
   }
   return result;
 }

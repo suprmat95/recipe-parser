@@ -382,7 +382,29 @@ describe('split on separator', () => {
   });
 }),
 it('"tre noci - 8 noci"', () => {
-  expect(multiLineParse('tre noci / quattro noci', 'ita')[0]).to.deep.equal({
+  expect(multiLineParse('tre noci - quattro noci', 'ita')[0]).to.deep.equal({
+  unit: null,
+  unitPlural: null,
+  symbol: null,
+  ingredient: 'noci',
+  quantity: 3,
+  minQty: 3,
+  maxQty: 3,
+});
+});
+it('"👉 tre noci 👉 8 noci"', () => {
+  expect(multiLineParse('👉 tre noci 👉 quattro noci', 'ita')[0]).to.deep.equal({
+  unit: null,
+  unitPlural: null,
+  symbol: null,
+  ingredient: 'noci',
+  quantity: 3,
+  minQty: 3,
+  maxQty: 3,
+});
+});
+it('"👉🏻 tre noci 👉 8 noci"', () => {
+  expect(multiLineParse('👉🏻 tre noci 👉 quattro noci', 'ita')[0]).to.deep.equal({
   unit: null,
   unitPlural: null,
   symbol: null,
