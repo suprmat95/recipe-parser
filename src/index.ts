@@ -146,7 +146,7 @@ export function parse(recipeString: string, language: string) {
 }
 
 export function multiLineParse(recipeString: string, language: string) {
-  const ingredients = recipeString.split(/[👉🏻👉\r\n-]/);
+  const ingredients = recipeString.split(/[,👉🏻👉\r\n-]/);
   let result = []
   let i;
   for (var ingredient of ingredients) {
