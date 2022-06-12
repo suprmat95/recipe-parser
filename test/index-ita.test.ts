@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {parse} from '../src/index';
+import {multiLineParse, parse} from '../src/index';
 
 describe('recipe parser ita', () => {
   it('returns an object', () => {
@@ -782,6 +782,9 @@ describe('recipe parser ita', () => {
     it('"1 pizzico acqua"', () => {
       expect(parse('2 pizzichi sale', 'ita').unit).to.equal('pizzico');
     });
+    it('"1 cubetto di ghiaccio"', () => {
+      expect(parse('2 cubetto di ghiaccio', 'ita').unit).to.equal('cubetto');
+    });
   });
 
   describe('translates the ingredient of', () => {
@@ -817,6 +820,61 @@ describe('recipe parser ita', () => {
     });
     it('"dieci kg farina"', () => {
       expect(parse('dieci kg farina', 'ita').ingredient).to.equal('farina');
+    });
+  });
+
+  describe('split on separator', () => {
+    it('"quattro noci - quattro noci"', () => {
+      expect(
+        multiLineParse('quattro noci - quattro noci', 'ita')[0],
+      ).to.deep.equal({
+        unit: null,
+        unitPlural: null,
+        symbol: null,
+        ingredient: 'noci',
+        quantity: 4,
+        minQty: 4,
+        maxQty: 4,
+      });
+    }),
+      it('"tre noci - 8 noci"', () => {
+        expect(
+          multiLineParse('tre noci - quattro noci', 'ita')[0],
+        ).to.deep.equal({
+          unit: null,
+          unitPlural: null,
+          symbol: null,
+          ingredient: 'noci',
+          quantity: 3,
+          minQty: 3,
+          maxQty: 3,
+        });
+      });
+    it('"👉 tre noci 👉 8 noci"', () => {
+      expect(
+        multiLineParse('👉 tre noci 👉 quattro noci', 'ita')[0],
+      ).to.deep.equal({
+        unit: null,
+        unitPlural: null,
+        symbol: null,
+        ingredient: 'noci',
+        quantity: 3,
+        minQty: 3,
+        maxQty: 3,
+      });
+    });
+    it('"👉🏻 tre noci 👉 8 noci"', () => {
+      expect(
+        multiLineParse('👉🏻 tre noci 👉 quattro noci', 'ita')[0],
+      ).to.deep.equal({
+        unit: null,
+        unitPlural: null,
+        symbol: null,
+        ingredient: 'noci',
+        quantity: 3,
+        minQty: 3,
+        maxQty: 3,
+      });
     });
   });
 });

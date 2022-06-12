@@ -155,7 +155,6 @@ export function parse(recipeString: string, language: SupportedLanguages) {
     [minQty, maxQty] = quantity.split('-');
     quantity = minQty;
   }
-
   return {
     quantity: convertToNumber(quantity, language),
     unit: unit ? unit : null,
@@ -167,6 +166,15 @@ export function parse(recipeString: string, language: SupportedLanguages) {
     minQty: convertToNumber(minQty, language),
     maxQty: convertToNumber(maxQty, language),
   };
+}
+
+export function multiLineParse(
+  recipeString: string,
+  language: SupportedLanguages,
+) {
+  const ingredients = recipeString.split(/[,👉🏻👉\r\n-]/); // eslint-disable-line no-misleading-character-class
+
+  return ingredients.map(x => parse(x, language)).filter(x => x['ingredient']);
 }
 
 export function combine(ingredientArray: Ingredient[]): Ingredient[] {

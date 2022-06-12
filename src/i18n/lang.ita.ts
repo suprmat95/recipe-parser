@@ -5,6 +5,7 @@ const units = {
   bicchiere: ['bicchiere'],
   bottiglia: ['bottiglie', 'bottiglia'],
   bustina: ['bustina', 'bustine'],
+  cubetto: ['cubetto', 'cubetti'],
   cucchiaio: ['cucchiai', 'cucchiaio'],
   cucchiaino: ['cucchiaini', 'cucchiaino'],
   confezione: ['confezioni', 'confezione'],
@@ -23,6 +24,7 @@ const units = {
   foglia: ['foglie', 'foglia'],
   foglio: ['fogli', 'foglio'],
   litro: ['l.', 'l', 'lt', 'litro'],
+  gambo: ['gambo', 'gambi'],
   mazzo: ['mazzo', 'mazzi'],
   mazzetto: ['Mazzetto', 'mazzetti', 'mazzetto'],
   lattina: ['Lattina', 'lattina'],
@@ -53,6 +55,8 @@ const pluralUnits = {
   bicchiere: 'bicchieri',
   bustina: 'bustine',
   bottiglia: 'bottiglie',
+  cubetto: 'cubetti',
+  gambo: 'gambi',
   tazza: 'tazze',
   quarto: 'quarti',
   cucchiaio: 'cucchiai',
@@ -86,12 +90,14 @@ const pluralUnits = {
   rotolo: 'rotoli',
   bicchierino: 'bicchierini',
   pugno: 'pugni',
-  // noce: 'noci'
+  //noce: 'noci'
 } as {[key: string]: string};
 
 const symbolUnits = {
   bicchiere: '',
   bustina: '',
+  cubetto: '',
+  gambo: '',
   tazza: '',
   quarto: '',
   cucchiaio: '',
@@ -104,6 +110,7 @@ const symbolUnits = {
   panetto: '',
   foglia: '',
   mazzetto: '',
+  manciata: '',
   vasetto: '',
   grammo: 'g',
   cucchiaino: 'cc',
@@ -167,6 +174,7 @@ export const numbersSmall: {[key: string]: number} = {
 
 export const numbersMagnitude: {[key: string]: number} = {
   cento: 100,
+  etto: 100,
   mille: 1000,
   mila: 1000,
   millione: 1000000,
