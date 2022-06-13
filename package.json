@@ -7,7 +7,8 @@
   "scripts": {
     "build": "rm -rf lib && tsc",
     "build:test": "rm -rf testDist && tsc -p test/tsconfig.json",
-    "lint": "tslint \"{./**/*.ts,./**/*.tsx}\" --exclude \"{./node_modules/**,./**/*.d.ts}\"",
+    "lint": "eslint src/",
+    "fmt": "prettier --write src/ && yarn lint --fix",
     "prepublish": "npm run build",
     "test": "npm run build:test && NODE_ENV=test mocha testDist/test/**/*.js",
     "test:watch": "nodemon --ignore lib --ignore testDist -e ts,tsx -x 'npm run test --silent || true'",
@@ -27,8 +28,13 @@
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/parser": "^5.27.1",
     "chai": "^4.1.0",
+    "eslint": "^8.17.0",
     "mocha": "^5.2.0",
+    "nodemon": "^2.0.14",
+    "prettier": "^2.6.2",
     "tslint": "^5.10.0",
     "typescript": "^4.2.3"
   },
