@@ -1,5 +1,7 @@
 import {LanguageConfig} from './interfaces';
 
+const baseUnits = ""
+
 const units = {
   clove: ['clove'],
   gallon: ['gallon', 'gal'],
@@ -132,6 +134,7 @@ const numbersMagnitude: {[key: string]: number} = {
 };
 
 export const LangEng: LanguageConfig = {
+  baseUnits,
   units,
   pluralUnits,
   symbolUnits,

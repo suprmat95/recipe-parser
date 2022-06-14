@@ -46,8 +46,9 @@ export function toTasteRecognize(
   return ['', '', false];
 }
 
-function getUnit(input: string, language: SupportedLanguages): string[] {
-  const {units, pluralUnits, symbolUnits} = i18nMap[language];
+// return format = [unit, unitPlural, symbol, originalUnit]
+function getUnit(quantity: string, input: string, language: SupportedLanguages): string[] {
+  const {units, pluralUnits, symbolUnits, baseUnits} = i18nMap[language];
   const [toTaste, toTasteMatch] = toTasteRecognize(input, language);
 
   const res = (response: string[]) => {
@@ -56,10 +57,12 @@ function getUnit(input: string, language: SupportedLanguages): string[] {
     return response;
   };
 
+  // identify discretionary units
   if (toTaste) {
     return res([toTaste, toTaste, toTasteMatch]);
   }
 
+  // input is a perfect match to a unit
   if (units[input] || pluralUnits[input]) {
     return res([input, pluralUnits[input], input]);
   }
@@ -85,6 +88,11 @@ function getUnit(input: string, language: SupportedLanguages): string[] {
       return res([pluralUnit, pluralUnits[pluralUnit], match[0]]);
     }
   }
+
+  // if no quantity or unit is detected and the language specifies a baseUnit
+  if ((!quantity || quantity == '0') && baseUnits.length > 0 && input){
+     return res(['q.b.', 'q.b.', '']);
+ }
 
   return [];
 }
@@ -131,6 +139,7 @@ export function parse(recipeString: string, language: SupportedLanguages) {
   }
   // grab unit and turn it into non-plural version, for ex: "Tablespoons" OR "Tsbp." --> "tablespoon"
   const [unit, unitPlural, symbol, originalUnit] = getUnit(
+    quantity,
     restOfIngredient,
     language,
   ) as string[];

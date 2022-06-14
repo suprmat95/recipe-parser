@@ -670,8 +670,8 @@ describe('recipe parser ita', () => {
   });
   it("doesn't explode when no unit and no quantity provided", () => {
     expect(parse('zucchero a velo', 'ita')).to.deep.equal({
-      unit: null,
-      unitPlural: null,
+      unit: 'q.b.',
+      unitPlural: 'q.b.',
       symbol: null,
       ingredient: 'zucchero a velo',
       quantity: 0,

@@ -1,4 +1,5 @@
 export type LanguageConfig = {
+  baseUnits: string;
   units: {[key: string]: string[]};
   pluralUnits: {[key: string]: string};
   symbolUnits: {[key: string]: string};
