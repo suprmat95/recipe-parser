@@ -26,27 +26,77 @@ export const engUnits = {
   large: ['large', 'Large'],
 } as { [key: string]: string[] };
 
+export const gerUnits = {
+  "tasche": ['tasche', 'taschen'],
+  "box": ['Dose'],
+  "dose": ['Dose'],
+  "tassen": ['Tasse','c', 'c.', 'C', 'Tasse'],
+  "zehe": ['Zehe'],
+  "gallone": ['Gallone','gal'],
+  "unze": ['Unze','oz', 'oz.'],
+  "pint": ['Pint','pt', 'pts', 'pt.'],
+  "pfund": ['pfund','lb', 'lb.', 'lbs', 'lbs.', 'Lb', 'Lbs'],
+  "viertel": ['viertel','qt', 'qt.', 'qts', 'qts.'],
+  "esslöffel": ['tbs', 'tbsp', 'tbspn', 'T', 'T.', 'Esslöffel'],
+  "teelöffel": ['teelöffel','tsp', 'tspn', 't', 't.'],
+  "gramm": ['gramm','g', 'g.'],
+  "kilogram": ['kilogram','kg', 'kg.', 'Kg', 'Kg.'],
+  "liter": ['liter','l', 'l.', 'lt', 'Lt', 'LT', 'L', 'L.'],
+  "milligram": ['milligram','mg', 'mg.'],
+  "milliliter": ['milliliter','ml', 'ml.', 'mL', 'mL.'],
+  "packungen": ['packungen','pkg', 'pkgs'],
+  "stange": ['stange','Stangen'],
+  "stück": ['Stück','stck', 'stck.'],
+  "prise": ['Prise'],
+  "klein": ['klein'],
+  "scheibe": ['Scheibe'],
+  "mittel": ['mittel'],
+  "groß": ['groß', 'Groß'],
+} as { [key: string]: string[] };
+
 export const engPluralUnits = {
-  cup: 'cups',
-  gallon: 'gallons',
-  ounce: 'ounces',
-  pint: 'pints',
-  pound: 'pounds',
-  quart: 'quarts',
-  tablespoon: 'tablespoons',
-  teaspoon: 'teaspoons',
-  gram: 'grams',
-  kilogram: 'kilograms',
-  liter: 'liters',
-  milligram: 'milligrams',
-  milliliter: 'milliliters',
-  clove: 'cloves',
-  bag: 'bags',
-  box: 'boxes',
-  pinch: 'pinches',
-  can: 'cans',
-  slice: 'slices',
-  piece: 'pieces'
+  'cup': 'cups',
+  'gallon': 'gallons',
+  'ounce': 'ounces',
+  'pint': 'pints',
+  'pound': 'pounds',
+  'quart': 'quarts',
+  'tablespoon': 'tablespoons',
+  'teaspoon': 'teaspoons',
+  'gram': 'grams',
+  'kilogram': 'kilograms',
+  'liter': 'liters',
+  'milligram': 'milligrams',
+  'milliliter': 'milliliters',
+  'clove': 'cloves',
+  'bag': 'bags',
+  'box': 'boxes',
+  'pinch': 'pinches',
+  'can': 'cans',
+  'slice': 'slices',
+  'piece': 'pieces'
+} as { [key: string]: string };
+
+export const gerPluralUnits = {
+  'tasse': 'Tassen',
+  'gallon': 'Gallonen',
+  'unze': 'Unzen',
+  'pint': 'Pint',
+  'pfund': 'Pfund',
+  'viertel': 'viertel',
+  'esslöffel': 'Esslöffel',
+  'teelöffel': 'Teelöffel',
+  'gramm': 'Gramm',
+  'kilogramm': 'Kilogramm',
+  'liter': 'Liter',
+  'milligram': 'Milligramm',
+  'milliliter': 'Milliliter',
+  'zehe': 'Zehen',
+  'tasche': 'Taschen',
+  'dose': 'Dosen',
+  'pinch': 'pinches',
+  'scheibe': 'Scheiben',
+  'stück': 'Stücke'
 } as { [key: string]: string };
 
 export const engNameToSymbol= {
@@ -72,7 +122,32 @@ export const engNameToSymbol= {
   piece: ''
 } as { [key: string]: string };
 
+export const gerNameToSymbol= {
+  cup: 't',
+  gallon: 'gal',
+  ounce: 'oz',
+  pint: 'pt',
+  pound: 'lb',
+  quart: 'qt',
+  tablespoon: 'tbs',
+  teaspoon: 'tsp',
+  gram: 'g',
+  kilogram: 'kg',
+  liter: 'lt',
+  milligram: 'mg',
+  milliliter: 'ml',
+  clove: '',
+  bag: '',
+  box: '',
+  pinch: '',
+  can: '',
+  slice: '',
+  piece: ''
+} as { [key: string]: string };
+
 export const engPreposition = ['of'];
+
+export const gerPreposition = ['von'];
 
 
 export const itaUnits = {
@@ -194,4 +269,5 @@ export const itaPreposition = ['di','d\''];
 export const  unitsMap = new Map();
 unitsMap.set("eng",[engUnits,  engPluralUnits, engPreposition, engNameToSymbol]);
 unitsMap.set("ita",[itaUnits,  itaPluralUnits, itaPreposition, itaNameToSymbol]);
+unitsMap.set("ger",[gerUnits,  gerPluralUnits, gerPreposition, gerNameToSymbol]);
 
