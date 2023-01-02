@@ -372,48 +372,48 @@ describe('recipe parser eng', () => {
 describe('split on separator', () => {
   it('"quattro noci - quattro noci"', () => {
     expect(multiLineParse('quattro noci - quattro noci', 'ita')[0]).to.deep.equal({
-    unit: null,
-    unitPlural: null,
-    symbol: null,
-    ingredient: 'noci',
-    quantity: 4,
-    minQty: 4,
-    maxQty: 4,
+      unit: null,
+      unitPlural: null,
+      symbol: null,
+      ingredient: 'noci',
+      quantity: 4,
+      minQty: 4,
+      maxQty: 4,
+    });
+  }),
+    it('"tre noci - 8 noci"', () => {
+      expect(multiLineParse('tre noci - quattro noci', 'ita')[0]).to.deep.equal({
+        unit: null,
+        unitPlural: null,
+        symbol: null,
+        ingredient: 'noci',
+        quantity: 3,
+        minQty: 3,
+        maxQty: 3,
+      });
+    });
+  it('"👉 tre noci 👉 8 noci"', () => {
+    expect(multiLineParse('👉 tre noci 👉 quattro noci', 'ita')[0]).to.deep.equal({
+      unit: null,
+      unitPlural: null,
+      symbol: null,
+      ingredient: 'noci',
+      quantity: 3,
+      minQty: 3,
+      maxQty: 3,
+    });
   });
-}),
-it('"tre noci - 8 noci"', () => {
-  expect(multiLineParse('tre noci - quattro noci', 'ita')[0]).to.deep.equal({
-  unit: null,
-  unitPlural: null,
-  symbol: null,
-  ingredient: 'noci',
-  quantity: 3,
-  minQty: 3,
-  maxQty: 3,
-});
-});
-it('"👉 tre noci 👉 8 noci"', () => {
-  expect(multiLineParse('👉 tre noci 👉 quattro noci', 'ita')[0]).to.deep.equal({
-  unit: null,
-  unitPlural: null,
-  symbol: null,
-  ingredient: 'noci',
-  quantity: 3,
-  minQty: 3,
-  maxQty: 3,
-});
-});
-it('"👉🏻 tre noci 👉 8 noci"', () => {
-  expect(multiLineParse('👉🏻 tre noci 👉 quattro noci', 'ita')[0]).to.deep.equal({
-  unit: null,
-  unitPlural: null,
-  symbol: null,
-  ingredient: 'noci',
-  quantity: 3,
-  minQty: 3,
-  maxQty: 3,
-});
-});
+  it('"👉🏻 tre noci 👉 8 noci"', () => {
+    expect(multiLineParse('👉🏻 tre noci 👉 quattro noci', 'ita')[0]).to.deep.equal({
+      unit: null,
+      unitPlural: null,
+      symbol: null,
+      ingredient: 'noci',
+      quantity: 3,
+      minQty: 3,
+      maxQty: 3,
+    });
+  });
 });
 describe('recipe parser ita', () => {
   it('returns an object', () => {
@@ -455,7 +455,7 @@ describe('recipe parser ita', () => {
     it('of "acqua quanto basta"', () => {
       expect(parse('acqua quanto basta', 'ita').unit).to.equal('q.b.');
     });
-    
+
     it('of "QB di acqua"', () => {
       expect(parse('QB di acqua', 'ita').unit).to.equal('q.b.');
     });
@@ -475,7 +475,7 @@ describe('recipe parser ita', () => {
       expect(parse('1 1/2 cucchiao acqua', 'ita').quantity).to.equal(1.5);
     });
     it('of "1/3 cucchiao acqua"', () => {
-      expect(parse('1/3 cucchiao acqua', 'ita').quantity).to.equal(0.333);
+      expect(parse('1/3 cucchiao acqua', 'ita').quantity).to.equal(0.33);
     });
     it('of "1/2 cucchiao acqua"', () => {
       expect(parse('1/2 cucchiao acqua', 'ita').quantity).to.equal(0.5);
@@ -529,22 +529,22 @@ describe('recipe parser ita', () => {
       });
     });
 
-  //  describe('translates the quantity range', () => {
-  //    it('of "10-20 cucchiao acqua"', () => {
-  //      expect(parse('10-20 cucchiao acqua', 'ita').quantity).to.equal('10-20');
-  //    });
-  //    it('of "10 - 20 cucchiao acqua"', () => {
-  //      expect(parse('10 - 20 cucchiao acqua', 'ita').quantity).to.equal('10-20');
-  //    });
-  //    it('of "10 to 20 cucchiao acqua"', () => {
-  //      expect(parse('10 to 20 cucchiao acqua', 'ita').quantity).to.equal('10-20');
-  //    });
-  //  });
+    //  describe('translates the quantity range', () => {
+    //    it('of "10-20 cucchiao acqua"', () => {
+    //      expect(parse('10-20 cucchiao acqua', 'ita').quantity).to.equal('10-20');
+    //    });
+    //    it('of "10 - 20 cucchiao acqua"', () => {
+    //      expect(parse('10 - 20 cucchiao acqua', 'ita').quantity).to.equal('10-20');
+    //    });
+    //    it('of "10 to 20 cucchiao acqua"', () => {
+    //      expect(parse('10 to 20 cucchiao acqua', 'ita').quantity).to.equal('10-20');
+    //    });
+    //  });
 
 
     describe('of unicode fractions', () => {
       const unicodeAmounts = ['¼', '½', '¾', '⅐', '⅑', '⅒', '⅓', '⅔', '⅕', '⅖', '⅗', '⅘', '⅙', '⅚', '⅛', '⅜', '⅝', '⅞'];
-      const unicodeExpectedAmounts = [0.25, 0.5, 0.75, 0.142, 0.111, 0.1, 0.333, 0.666, 0.2, 0.4, 0.6, 0.8, 0.166, 0.833, 0.125, 0.375, 0.625, 0.875];
+      const unicodeExpectedAmounts = [0.25, 0.5, 0.75, 0.14, 0.11, 0.1, 0.33, 0.66, 0.2, 0.4, 0.6, 0.8, 0.16, 0.83, 0.12, 0.37, 0.62, 0.87];
 
       for (let u = 0; u < unicodeAmounts.length; u++) {
         const element = unicodeAmounts[u];
@@ -568,13 +568,13 @@ describe('recipe parser ita', () => {
 
     it('doesn\'t freak out if a strange unicode character is present', () => {
       expect(parse('1/3 tazza zucchero a velo', 'ita')).to.deep.equal({
-        quantity: 0.333,
+        quantity: 0.33,
         unit: 'tazza',
         unitPlural: 'tazze',
         symbol: null,
         ingredient: 'zucchero a velo',
-        minQty: 0.333,
-        maxQty: 0.333,
+        minQty: 0.33,
+        maxQty: 0.33,
       });
     });
   });
@@ -657,39 +657,39 @@ describe('recipe parser ita', () => {
         maxQty: 1,
       });
     });
-  //  it('"parses ingredient with range: 1 to 2 petto di pollo"', () => {
-  //    expect(parse('1 to 2 petto di pollo', 'ita')).to.deep.equal({
-  //      unit: null,
-  //      unitPlural: null,
-  //      symbol: null,
-  //      quantity: '1-2',
-  //      ingredient: 'petto di pollo',
-  //      minQty: '1',
-  //      maxQty: '2',
-  //    });
-  //  });
-  //  it('"parses ingredient with range: 1 - 2  petto di pollo"', () => {
-  //    expect(parse('1 - 2 petto di pollo', 'ita')).to.deep.equal({
-  //      unit: null,
-  //      unitPlural: null,
-  //      symbol: null,
-  //      quantity: '1-2',
-  //      ingredient: 'petto di pollo',
-  //      minQty: '1',
-  //      maxQty: '2',
-  //    });
-  //  });
-  //  it('"parses ingredient with range: 1-2 petto di pollo"', () => {
-  //    expect(parse('1-2 petto di pollo', 'ita')).to.deep.equal({
-  //      unit: null,
-  //      unitPlural: null,
-  //      symbol: null,
-  //      quantity: '1-2',
-  //      ingredient: 'petto di pollo',
-  //      minQty: 1,
-  //      maxQty: 2,
-  //    });
-  //  });
+    //  it('"parses ingredient with range: 1 to 2 petto di pollo"', () => {
+    //    expect(parse('1 to 2 petto di pollo', 'ita')).to.deep.equal({
+    //      unit: null,
+    //      unitPlural: null,
+    //      symbol: null,
+    //      quantity: '1-2',
+    //      ingredient: 'petto di pollo',
+    //      minQty: '1',
+    //      maxQty: '2',
+    //    });
+    //  });
+    //  it('"parses ingredient with range: 1 - 2  petto di pollo"', () => {
+    //    expect(parse('1 - 2 petto di pollo', 'ita')).to.deep.equal({
+    //      unit: null,
+    //      unitPlural: null,
+    //      symbol: null,
+    //      quantity: '1-2',
+    //      ingredient: 'petto di pollo',
+    //      minQty: '1',
+    //      maxQty: '2',
+    //    });
+    //  });
+    //  it('"parses ingredient with range: 1-2 petto di pollo"', () => {
+    //    expect(parse('1-2 petto di pollo', 'ita')).to.deep.equal({
+    //      unit: null,
+    //      unitPlural: null,
+    //      symbol: null,
+    //      quantity: '1-2',
+    //      ingredient: 'petto di pollo',
+    //      minQty: 1,
+    //      maxQty: 2,
+    //    });
+    //  });
     it('"1 (16 oz) scatola pasta"', () => {
       expect(parse('1 (16 oz) scatola pasta', 'ita')).to.deep.equal({
         unit: 'scatola',
@@ -1201,7 +1201,21 @@ describe('recipe parser ita', () => {
     it('"250 kg di farina"', () => {
       expect(parse('250 kg di farina', 'ita').quantity).to.equal(250);
     });
-   
+
+  });
+  describe('translates bug with g', () => {
+    it('"sgombro 300 g"', () => {
+      expect(parse('sgombro 300 g', 'ita').ingredient).to.equal('sgombro');
+    });
+    it('"lamle 300 ml"', () => {
+      expect(parse('lamle 300 ml', 'ita').ingredient).to.equal('lamle');
+    });
+    it('"lamge 300 mg"', () => {
+      expect(parse('lamge 300 mg', 'ita').ingredient).to.equal('lamge');
+    });
+    it('"lamge 1/3 mg"', () => {
+      expect(parse('lamge 1/3  mg', 'ita').quantity).to.equal(0.33);
+    });
   });
 });
 
