@@ -2,23 +2,23 @@ export const engUnits = {
   bag: ['bag', 'bags'],
   box: ['box'],
   can: ['can'],
-  cup: ['cup','c', 'c.', 'C', 'Cups'],
+  cup: ['cup', 'c', 'c.', 'C', 'Cups'],
   clove: ['clove'],
-  gallon: ['gallon','gal'],
-  ounce: ['ounce','oz', 'oz.'],
-  pint: ['pint','pt', 'pts', 'pt.'],
-  pound: ['pound','lb', 'lb.', 'lbs', 'lbs.', 'Lb', 'Lbs'],
-  quart: ['quart','qt', 'qt.', 'qts', 'qts.'],
+  gallon: ['gallon', 'gal'],
+  ounce: ['ounce', 'oz', 'oz.'],
+  pint: ['pint', 'pt', 'pts', 'pt.'],
+  pound: ['pound', 'lb', 'lb.', 'lbs', 'lbs.', 'Lb', 'Lbs'],
+  quart: ['quart', 'qt', 'qt.', 'qts', 'qts.'],
   tablespoon: ['tbs', 'tbsp', 'tbspn', 'T', 'T.', 'Tablespoons', 'Tablespoon'],
-  teaspoon: ['teaspoon','tsp', 'tspn', 't', 't.'],
-  gram: ['gram','g', 'g.'],
-  kilogram: ['kilogram','kg', 'kg.', 'Kg', 'Kg.'],
-  liter: ['liter','l', 'l.', 'lt', 'Lt', 'LT', 'L', 'L.'],
-  milligram: ['milligram','mg', 'mg.'],
-  milliliter: ['milliliter','ml', 'ml.', 'mL', 'mL.'],
-  package: ['package','pkg', 'pkgs'],
-  stick: ['stick','sticks'],
-  piece: ['piece','pcs', 'pcs.'],
+  teaspoon: ['teaspoon', 'tsp', 'tspn', 't', 't.'],
+  gram: ['gram', 'g', 'g.'],
+  kilogram: ['kilogram', 'kg', 'kg.', 'Kg', 'Kg.'],
+  liter: ['liter', 'l', 'l.', 'lt', 'Lt', 'LT', 'L', 'L.'],
+  milligram: ['milligram', 'mg', 'mg.'],
+  milliliter: ['milliliter', 'ml', 'ml.', 'mL', 'mL.'],
+  package: ['package', 'pkg', 'pkgs'],
+  stick: ['stick', 'sticks'],
+  piece: ['piece', 'pcs', 'pcs.'],
   pinch: ['pinch'],
   small: ['Small'],
   slice: ['slice'],
@@ -49,7 +49,7 @@ export const engPluralUnits = {
   piece: 'pieces'
 } as { [key: string]: string };
 
-export const engNameToSymbol= {
+export const engNameToSymbol = {
   cup: 'c',
   gallon: 'gal',
   ounce: 'oz',
@@ -77,32 +77,32 @@ export const engPreposition = ['of'];
 
 export const itaUnits = {
   barattolo: ['barattolo', 'barattoli'],
-  bicchiere: ['bicchiere'],
-  bottiglia: ['bottiglie','bottiglia'],
+  bicchiere: ['bicchiere'],
+  bottiglia: ['bottiglie', 'bottiglia'],
   bustina: ['bustina', 'bustine'],
   cubetto: ['cubetto', 'cubetti'],
-  cucchiaio: ['cucchiai','cucchiaio'],
-  cucchiaino: ['cucchiaini','cucchiaino'],
-  confezione: ['confezioni','confezione'],
-  grammo: ['g', 'g\\.', 'gr', 'gr\\.','grammi','grammo'],
-  chilogrammo: ['kg.', 'kg', 'kilogrammo', 'chilogrammi','kilogrammo','chilogrammo'],
+  cucchiaio: ['cucchiai', 'cucchiaio'],
+  cucchiaino: ['cucchiaini', 'cucchiaino'],
+  confezione: ['confezioni', 'confezione'],
+  grammo: ['g', 'g\\.', 'gr\\.', 'gr', 'grammi', 'grammo'],
+  chilogrammo: ['kg.', 'kg', 'kilogrammo', 'chilogrammi', 'kilogrammo', 'chilogrammo'],
   fetta: ['fetta', 'fette'],
   fettina: ['fettina', 'fettine'],
-  fogliolina: ['fogliolina','foglioline'],
-  foglia: ['foglie','foglia'],
-  foglio: ['fogli','foglio'],
+  fogliolina: ['fogliolina', 'foglioline'],
+  foglia: ['foglie', 'foglia'],
+  foglio: ['fogli', 'foglio'],
   gambo: ['gambo', 'gambi'],
-  litro: [ 'l\\.','l', 'lt','litro'],
-  mazzo: ['mazzo','mazzi'],
-  mazzetto: ['Mazzetto','mazzetti','mazzetto'],
-  lattina: ['Lattina','lattina'],
-  milligrammo: ['mg.','mg', 'milligrammo'],
-  millilitro: [ 'ml','ml\\.', 'millilitro'],
+  litro: ['l\\.', 'l', 'lt', 'litro'],
+  mazzo: ['mazzo', 'mazzi'],
+  mazzetto: ['Mazzetto', 'mazzetti', 'mazzetto'],
+  lattina: ['Lattina', 'lattina'],
+  milligrammo: ['mg.', 'mg', 'milligrammo'],
+  millilitro: ['ml', 'ml\\.', 'millilitro'],
   panetto: ['Panetto', 'panetti', 'panetto'],
-  pacco: ['pkg', 'pkgs', 'pacchetto','pacco'],
-  pezzo: ['pezzo','pcs', 'pcs.','pezzi'],
-  pizzico: ['pizzico','pizzichi'],
-  tazza: ['tazza', 'tazzina','tazzine'],
+  pacco: ['pkg', 'pkgs', 'pacchetto', 'pacco'],
+  pezzo: ['pezzo', 'pcs', 'pcs.', 'pezzi'],
+  pizzico: ['pizzico', 'pizzichi'],
+  tazza: ['tazza', 'tazzina', 'tazzine'],
   sacco: ['sacco', 'sacchi'],
   spicchio: ['spicchio', 'spicchi'],
   scatola: ['scatola', 'scatole'],
@@ -189,9 +189,9 @@ export const itaNameToSymbol = {
   millilitro: 'ml',
 } as { [key: string]: string };
 
-export const itaPreposition = ['di','d\''];
+export const itaPreposition = ['di', 'd\''];
 
-export const  unitsMap = new Map();
-unitsMap.set("eng",[engUnits,  engPluralUnits, engPreposition, engNameToSymbol]);
-unitsMap.set("ita",[itaUnits,  itaPluralUnits, itaPreposition, itaNameToSymbol]);
+export const unitsMap = new Map();
+unitsMap.set("eng", [engUnits, engPluralUnits, engPreposition, engNameToSymbol]);
+unitsMap.set("ita", [itaUnits, itaPluralUnits, itaPreposition, itaNameToSymbol]);
 

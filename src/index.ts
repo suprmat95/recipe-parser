@@ -6,17 +6,6 @@ import { toTasteMap } from './numbers';
 //import * as Natural from 'natural';
 
 //const nounInflector = new Natural.NounInflector();
-const replaceLast = (str: string, pattern: string, replacement: string) => {
-  const match =
-    typeof pattern === 'string'
-      ? pattern
-      : (str.match(new RegExp(pattern, 'g')) || []).slice(-1)[0];
-  if (!match) return str;
-  const last = str.lastIndexOf(match);
-  return last !== -1
-    ? `${str.slice(0, last)}${replacement}${str.slice(last + match.length)}`
-    : str;
-}
 
 export interface Ingredient {
   ingredient: string;
@@ -111,7 +100,6 @@ export function parse(recipeString: string, language: string) {
   For example: "1 pinch salt" --> quantity: 1, restOfIngredient: pinch salt */
   let [quantity, restOfIngredient] = convert.findQuantityAndConvertIfUnicode(ingredientLine, language) as string[];
   quantity = convert.convertFromFraction(quantity);
-
   /* extraInfo will be any info in parantheses. We'll place it at the end of the ingredient.
   For example: "sugar (or other sweetener)" --> extraInfo: "(or other sweetener)" */
   let extraInfo;
@@ -122,7 +110,10 @@ export function parse(recipeString: string, language: string) {
   // grab unit and turn it into non-plural version, for ex: "Tablespoons" OR "Tsbp." --> "tablespoon"
   let [unit, unitPlural, symbol, originalUnit] = getUnit(restOfIngredient, language) as string[]
   // remove unit from the ingredient if one was found and trim leading and trailing whitespace
-  let ingredient = !!originalUnit ? replaceLast(restOfIngredient, originalUnit, '').trim() : replaceLast(restOfIngredient, unit, '').trim();
+  let regex_originalunit = RegExp('^' + originalUnit + '|' + originalUnit + '$')
+  let regex_unit = RegExp('^' + unit + '|' + unit + '$')
+
+  let ingredient = !!originalUnit ? restOfIngredient.replace(regex_originalunit, '').trim() : restOfIngredient.replace(regex_unit, '').trim();
   ingredient = ingredient.split('.').join("").trim()
   let preposition = getPreposition(ingredient.split(' ')[0], language)
 
@@ -207,8 +198,6 @@ export function prettyPrintingPress(ingredient: Ingredient) {
         numerator /= divisor;
         denominator /= divisor;
         fractional = Math.floor(numerator) + '/' + Math.floor(denominator);
-        console.log("fractional")
-        console.log(fractional)
       }
 
       quantity += quantity ? ' ' + fractional : fractional;

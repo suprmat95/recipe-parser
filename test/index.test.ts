@@ -989,7 +989,7 @@ describe('recipe parser ita', () => {
       minQty: 100,
       maxQty: 100,
     });
-    expect(parse('tortilla 100 gr.', 'ita')).to.deep.equal({
+    expect(parse('tortilla 100 gr', 'ita')).to.deep.equal({
       unit: 'grammo',
       unitPlural: 'grammi',
       symbol: 'g',
@@ -1189,6 +1189,12 @@ describe('recipe parser ita', () => {
     });
     it('"dieci kg farina"', () => {
       expect(parse('dieci kg farina', 'ita').ingredient).to.equal('farina');
+    });
+    it('"3 g spaghetti"', () => {
+      expect(parse('3 g spaghetti', 'ita').ingredient).to.equal('spaghetti');
+    });
+    it('"3 mg spamghetti"', () => {
+      expect(parse('3 mg spamghetti', 'ita').ingredient).to.equal('spamghetti');
     });
   });
   describe('translates q.b. without quantity of', () => {
