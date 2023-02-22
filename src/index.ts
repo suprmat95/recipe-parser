@@ -45,7 +45,8 @@ function getUnit(input: string, language: string) {
   let symbolUnits = unit[3]
   let response = [] as string[];
   const [toTaste, match, extFlag] = toTasteRecognize(input, language)
-  if (toTaste) {
+  // If there is already a unit found for the ingredient, don't add toTaste. Fixes t.t. bug from words with two t's
+  if (toTaste && !unit) {
     if (extFlag) {
       response = [toTaste, toTaste, match];
     }
