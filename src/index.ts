@@ -145,7 +145,7 @@ export function parse(recipeString: string, language: string) {
 }
 
 export function multiLineParse(recipeString: string, language: string) {
-  let ingredients = recipeString.split(/,|👉🏻|👉|\be\b|\r|\n|-|;/g);
+  let ingredients = recipeString.split(/,|👉🏻|👉|\r|\n|-|;/g);
   ingredients = ingredients.filter((line) => {
     // Verifica se la riga contiene una qualsiasi delle varianti della parola "ingredienti"
     if (/ingredient[ei]/i.test(line)) {
