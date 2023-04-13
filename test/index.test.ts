@@ -370,17 +370,72 @@ describe('recipe parser eng', () => {
 */
 /////ITALIAN TEST
 describe('split on separator', () => {
-  it('"quattro noci - quattro noci"', () => {
-    expect(multiLineParse('quattro noci - quattro noci', 'ita')[0]).to.deep.equal({
+  it('"3-4 noci - quattro noci - quattro noci"', () => {
+    expect(multiLineParse('12-3 noci - quattro noci - quattro noci', 'ita')[0]).to.deep.equal({
       unit: null,
       unitPlural: null,
       symbol: null,
       ingredient: 'noci',
-      quantity: 4,
-      minQty: 4,
-      maxQty: 4,
+      quantity: 3,
+      minQty: 3,
+      maxQty: 3,
     });
   }),
+    it('"INGREDIENTI per 4 persone - quattro noci - quattro noci"', () => {
+      expect(multiLineParse('INGREDIENTI per 4 persone - quattro noci - quattro noci', 'ita')[0]).to.deep.equal({
+        unit: null,
+        unitPlural: null,
+        symbol: null,
+        ingredient: 'noci',
+        quantity: 4,
+        minQty: 4,
+        maxQty: 4,
+      });
+    }),
+    it('"ingredienti per 4 persone - quattro noci - quattro noci"', () => {
+      expect(multiLineParse('ingredienti per 4 persone - quattro noci - quattro noci', 'ita')[0]).to.deep.equal({
+        unit: null,
+        unitPlural: null,
+        symbol: null,
+        ingredient: 'noci',
+        quantity: 4,
+        minQty: 4,
+        maxQty: 4,
+      });
+    }),
+    it('"- quattro noci - quattro noci"', () => {
+      expect(multiLineParse('- quattro noci - quattro noci', 'ita')[0]).to.deep.equal({
+        unit: null,
+        unitPlural: null,
+        symbol: null,
+        ingredient: 'noci',
+        quantity: 4,
+        minQty: 4,
+        maxQty: 4,
+      });
+    }),
+    it('"quattro noci - quattro noci e cinque mele"', () => {
+      expect(multiLineParse('quattro noci - quattro noci e cinque mele', 'ita')[2]).to.deep.equal({
+        unit: null,
+        unitPlural: null,
+        symbol: null,
+        ingredient: 'mele',
+        quantity: 5,
+        minQty: 5,
+        maxQty: 5,
+      });
+    }),
+    it('"quattro noci - quattro noci"', () => {
+      expect(multiLineParse('quattro noci - quattro noci', 'ita')[0]).to.deep.equal({
+        unit: null,
+        unitPlural: null,
+        symbol: null,
+        ingredient: 'noci',
+        quantity: 4,
+        minQty: 4,
+        maxQty: 4,
+      });
+    }),
     it('"tre noci - 8 noci"', () => {
       expect(multiLineParse('tre noci - quattro noci', 'ita')[0]).to.deep.equal({
         unit: null,
