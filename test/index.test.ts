@@ -1240,6 +1240,15 @@ describe('recipe parser ita', () => {
     it('"lamge 1/3 mg"', () => {
       expect(parse('lamge 1/3  mg', 'ita').quantity).to.equal(0.33);
     });
+    it('"guanciale 100 g"', () => {
+      expect(parse('guanciale 100 g', 'ita').ingredient).to.equal('guanciale');
+    });
+    it('"Guanciale 100 g"', () => {
+      expect(parse('Guanciale 100 g', 'ita').ingredient).to.equal('guanciale');
+    });
+    it('"cuangiale 100 g"', () => {
+      expect(parse('cuangiale 100 g', 'ita').ingredient).to.equal('cuangiale');
+    });
   });
 });
 

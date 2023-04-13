@@ -23,12 +23,12 @@ export function toTasteRecognize(input: string, language: string) {
 
   if (firstLetter) {
     //checking the extended version
-    let regEx = new RegExp(toTaste, 'gi')
+    let regEx = new RegExp('\\b' + toTaste + '\\b', 'gi')
     if (input.match(regEx)) {
       return [(firstLetter.join('.') + '.').toLocaleLowerCase(), convert.getFirstMatch(input, regEx), true] as [string, string, boolean]
     }
     const regExString = firstLetter.join('[.]?') + '[.]?'
-    regEx = new RegExp(regExString, 'gi')
+    regEx = new RegExp('\\b' + regExString + '\\b', 'gi')
     //const a = input.toString().split(/[\s-]+/);
     if (input.match(regEx)) {
       return [(firstLetter.join('.') + '.').toLocaleLowerCase(), convert.getFirstMatch(input, regEx), false] as [string, string, boolean]
@@ -110,8 +110,8 @@ export function parse(recipeString: string, language: string) {
   // grab unit and turn it into non-plural version, for ex: "Tablespoons" OR "Tsbp." --> "tablespoon"
   let [unit, unitPlural, symbol, originalUnit] = getUnit(restOfIngredient, language) as string[]
   // remove unit from the ingredient if one was found and trim leading and trailing whitespace
-  let regex_originalunit = RegExp('^' + originalUnit + '|' + originalUnit + '$')
-  let regex_unit = RegExp('^' + unit + '|' + unit + '$')
+  let regex_originalunit = RegExp('\\b' + originalUnit + '\\b', 'gi')
+  let regex_unit = RegExp('\\b' + unit + '\\b', 'gi')
 
   let ingredient = !!originalUnit ? restOfIngredient.replace(regex_originalunit, '').trim() : restOfIngredient.replace(regex_unit, '').trim();
   ingredient = ingredient.split('.').join("").trim()
