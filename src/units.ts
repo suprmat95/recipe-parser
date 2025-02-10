@@ -195,3 +195,27 @@ export const unitsMap = new Map();
 unitsMap.set("eng", [engUnits, engPluralUnits, engPreposition, engNameToSymbol]);
 unitsMap.set("ita", [itaUnits, itaPluralUnits, itaPreposition, itaNameToSymbol]);
 
+export function extractAllUnits(language: string): string[] {
+  const unitData = unitsMap.get(language);
+  if (!unitData) return [];
+
+  const flattenedUnits = new Set<string>();
+
+  for (const data of unitData) {
+    if (Array.isArray(data)) {
+      // If it's already an array, add all its elements
+      data.forEach((unit) => flattenedUnits.add(unit));
+    } else if (typeof data === "object") {
+      // If it's an object (dictionary), extract all values
+      Object.values(data).forEach((value: any) => {
+        if (Array.isArray(value)) {
+          value.forEach((unit) => flattenedUnits.add(unit));
+        } else {
+          flattenedUnits.add(value);
+        }
+      });
+    }
+  }
+
+  return Array.from(flattenedUnits);
+}
