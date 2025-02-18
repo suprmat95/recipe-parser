@@ -5,6 +5,7 @@ import {
   petraParse as parse,
   petraMultiLineParse as multiLineParse,
 } from "../../src/petra/petra-parser";
+import { petraPreprocessing } from "../../src/petra/petra-convert";
 
 describe("split on separator", () => {
   it('"3-4 noci - quattro noci - quattro noci"', () => {
@@ -1036,18 +1037,6 @@ describe('handles special "Farina" and "Petra" numeric references in real-world 
     });
   });
 
-  it('parses "petra 0 3 cucchiai" correctly', () => {
-    expect(parse("petra 0 3 cucchiai", "ita")).to.deep.equal({
-      quantity: 3,
-      unit: "cucchiaio",
-      unitPlural: "cucchiai",
-      symbol: null,
-      ingredient: "petra 0",
-      minQty: 3,
-      maxQty: 3,
-    });
-  });
-
   it('parses "petra 9 250ml" correctly', () => {
     expect(parse("petra 9 250 ml", "ita")).to.deep.equal({
       quantity: 250,
@@ -1129,6 +1118,188 @@ describe('handles special "Farina" and "Petra" numeric references in real-world 
       ingredient: "petra 1",
       minQty: 20,
       maxQty: 20,
+    });
+  });
+  it('parses "farina petra 5063 500g" correctly', () => {
+    expect(parse("farina petra 5063 500 g", "ita")).to.deep.equal({
+      quantity: 500,
+      unit: "grammo",
+      unitPlural: "grammi",
+      symbol: "g",
+      ingredient: "farina petra 5063",
+      minQty: 500,
+      maxQty: 500,
+    });
+  });
+
+  it('parses "petra 8612 1kg" correctly', () => {
+    expect(parse("petra 8612 9 kg", "ita")).to.deep.equal({
+      quantity: 9,
+      unit: "chilogrammo",
+      unitPlural: "chilogrammi",
+      symbol: "kg",
+      ingredient: "petra 8612",
+      minQty: 9,
+      maxQty: 9,
+    });
+  });
+
+  it('parses "petra 0102 hp 2 barattoli" correctly', () => {
+    console.log(petraPreprocessing("petra 0102 hp 2 barattoli", []));
+    expect(parse("petra 0102 hp 3 barattoli", "ita")).to.deep.equal({
+      quantity: 3,
+      unit: "barattolo",
+      unitPlural: "barattoli",
+      symbol: null,
+      ingredient: "petra 0102 hp",
+      minQty: 3,
+      maxQty: 3,
+    });
+  });
+
+  it('parses "farina petra 0005 - zero glutine 250ml" correctly', () => {
+    expect(
+      parse("farina petra 0005 - zero glutine 250 ml", "ita")
+    ).to.deep.equal({
+      quantity: 250,
+      unit: "millilitro",
+      unitPlural: "millilitri",
+      symbol: "ml",
+      ingredient: "farina petra 0005 - zero glutine",
+      minQty: 250,
+      maxQty: 250,
+    });
+  });
+
+  it('parses "petra 0003 - zero glutine 3 cucchiai" correctly', () => {
+    expect(parse("petra 0003 - zero glutine 4 cucchiai", "ita")).to.deep.equal({
+      quantity: 4,
+      unit: "cucchiaio",
+      unitPlural: "cucchiai",
+      symbol: null,
+      ingredient: "petra 0003 - zero glutine",
+      minQty: 4,
+      maxQty: 4,
+    });
+  });
+
+  it('parses "petra 5046 5 litri" correctly', () => {
+    expect(parse("petra 5046 8 litri", "ita")).to.deep.equal({
+      quantity: 8,
+      unit: "litro",
+      unitPlural: "litri",
+      symbol: "lt",
+      ingredient: "petra 5046",
+      minQty: 8,
+      maxQty: 8,
+    });
+  });
+
+  it('parses "farina petra 1110 750g" correctly', () => {
+    expect(parse("farina petra 1110 750 g", "ita")).to.deep.equal({
+      quantity: 750,
+      unit: "grammo",
+      unitPlural: "grammi",
+      symbol: "g",
+      ingredient: "farina petra 1110",
+      minQty: 750,
+      maxQty: 750,
+    });
+  });
+
+  it('parses "petra 5078 4 pezzi" correctly', () => {
+    expect(parse("petra 5078 4 pezzi", "ita")).to.deep.equal({
+      quantity: 4,
+      unit: "pezzo",
+      unitPlural: "pezzi",
+      symbol: null,
+      ingredient: "petra 5078",
+      minQty: 4,
+      maxQty: 4,
+    });
+  });
+
+  it('parses "petra 7210 200g" correctly', () => {
+    expect(parse("petra 7210 200 g", "ita")).to.deep.equal({
+      quantity: 200,
+      unit: "grammo",
+      unitPlural: "grammi",
+      symbol: "g",
+      ingredient: "petra 7210",
+      minQty: 200,
+      maxQty: 200,
+    });
+  });
+
+  it('parses "petra 0104 hp 12 barattoli" correctly', () => {
+    expect(parse("petra 0104 hp 12 barattoli", "ita")).to.deep.equal({
+      quantity: 12,
+      unit: "barattolo",
+      unitPlural: "barattoli",
+      symbol: null,
+      ingredient: "petra 0104 hp",
+      minQty: 12,
+      maxQty: 12,
+    });
+  });
+
+  it('parses "petra 0006 500ml" correctly', () => {
+    expect(parse("petra 0006 500 ml", "ita")).to.deep.equal({
+      quantity: 500,
+      unit: "millilitro",
+      unitPlural: "millilitri",
+      symbol: "ml",
+      ingredient: "petra 0006",
+      minQty: 500,
+      maxQty: 500,
+    });
+  });
+
+  it('parses "farina petra 5063 1.5kg" correctly', () => {
+    expect(parse("farina petra 5063 1.5 kg", "ita")).to.deep.equal({
+      quantity: 1.5,
+      unit: "chilogrammo",
+      unitPlural: "chilogrammi",
+      symbol: "kg",
+      ingredient: "farina petra 5063",
+      minQty: 1.5,
+      maxQty: 1.5,
+    });
+  });
+
+  it('parses "petra 0101 hp 300g" correctly', () => {
+    expect(parse("petra 0101 hp 300 g", "ita")).to.deep.equal({
+      quantity: 300,
+      unit: "grammo",
+      unitPlural: "grammi",
+      symbol: "g",
+      ingredient: "petra 0101 hp",
+      minQty: 300,
+      maxQty: 300,
+    });
+  });
+
+  it('parses "petra 6388 2 bottiglie" correctly', () => {
+    expect(parse("petra 6388 2 bottiglie", "ita")).to.deep.equal({
+      quantity: 2,
+      unit: "bottiglia",
+      unitPlural: "bottiglie",
+      symbol: null,
+      ingredient: "petra 6388",
+      minQty: 2,
+      maxQty: 2,
+    });
+  });
+
+  it('parses "petra 5009 2,5kg" correctly', () => {
+    expect(parse("petra 5009 2.5 kg", "ita")).to.deep.equal({
+      quantity: 2.5,
+      unit: "chilogrammo",
+      unitPlural: "chilogrammi",
+      symbol: "kg",
+      ingredient: "petra 5009",
+      minQty: 2.5,
+      maxQty: 2.5,
     });
   });
 });

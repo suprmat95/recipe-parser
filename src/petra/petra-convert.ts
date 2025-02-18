@@ -21,46 +21,26 @@ import { getPetraKeywords } from "./petra-keywords";
  * @param units An array of valid unit strings (e.g. ["g", "kg", "ml", "l"]).
  * @returns The processed string.
  */
-export function petraPreprocessing(str: string, units: string[]): string {
-  // Build a regex to match a quantity at the end:
-  //   a number (with optional decimal), optional whitespace,
-  //   then one of the allowed units, then end-of-string.
-  const unitsPattern = units.join("|");
-  const quantityRegex = new RegExp(
-    `(\\d+(?:[.,]\\d+)?)\\s*(${unitsPattern})\\s*$`,
-    "i"
-  );
+export function petraPreprocessing(
+  str: string,
+  units: string[],
+  _keywords?: string[]
+): string {
+  // Get keywords list
+  const keywords = _keywords || getPetraKeywords();
 
-  const quantityMatch = str.match(quantityRegex);
-  if (quantityMatch && quantityMatch.index !== undefined) {
-    // The entire matched quantity string (e.g. "10 g")
-    const quantityPart = quantityMatch[0].trim();
-    // The number part of the quantity (e.g. "10")
-    const quantityNumber = quantityMatch[1];
-    // The part of the string before the quantity pattern begins
-    const beforeQuantity = str.slice(0, quantityMatch.index).trim();
-    // Split into tokens by whitespace
-    const tokens = beforeQuantity.split(/\s+/);
-    // If the very last token equals the quantity number,
-    // then that number is really part of the product name.
-    if (tokens.length > 0 && tokens[tokens.length - 1] === quantityNumber) {
-      // “Glue” all tokens with an underscore and then re-attach the quantity.
-      const underscored = tokens.join("_");
-      return underscored + " " + quantityPart;
-    }
-  }
+  units;
 
-  // If no (trailing) quantity pattern was detected—or no special case applies—
-  // fall back on checking for one of our known keywords (order matters).
-  const keywords = getPetraKeywords();
+  str = str.trim().replace(/^(-)/, "").toLowerCase();
+
+  // Replace any matching keyword with its underscored version
   for (const keyword of keywords) {
     if (str.includes(keyword)) {
-      const underscoredKeyword = keyword.replace(/ /g, "_");
-      return str.replace(keyword, underscoredKeyword);
+      str = str.replace(keyword, keyword.replace(/ /g, "_"));
+      break;
     }
   }
 
-  // If nothing matches, return the original string.
   return str;
 }
 
