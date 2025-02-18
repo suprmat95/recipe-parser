@@ -5,11 +5,15 @@ import { petraPostprocessing, petraPreprocessing } from "./petra-convert";
 import { parse } from "../";
 import { extractAllUnits } from "../units";
 
-export function petraParse(recipeString: string, language: string) {
+export function petraParse(
+  recipeString: string,
+  language: string,
+  keywords?: string[]
+) {
   // the unitsMap is a map of language to units. It contains an arar
   const unitsArray = extractAllUnits(language);
 
-  recipeString = petraPreprocessing(recipeString, unitsArray);
+  recipeString = petraPreprocessing(recipeString, unitsArray, keywords);
   const result = parse(recipeString, language);
 
   result.ingredient = petraPostprocessing(result.ingredient);
